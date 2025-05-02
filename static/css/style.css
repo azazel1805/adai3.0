@@ -529,6 +529,99 @@ button:disabled {
     padding: 5px; /* Padding around image */
     box-shadow: 0 3px 8px rgba(0,0,0,0.3);
 }
+.objectifier-options {
+    margin-bottom: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.option-btn { /* Style for Upload/Camera toggle buttons */
+    flex-grow: 1; /* Make buttons share space */
+    background-color: var(--bg-light);
+    color: var(--text-secondary);
+    border: 1px solid var(--bg-lighter);
+    padding: 9px 15px;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    font-weight: 400;
+    transition: all var(--transition-speed) ease;
+}
+
+.option-btn:hover {
+    background-color: var(--bg-lighter);
+    color: var(--text-primary);
+}
+
+.option-btn.active {
+    background-color: var(--accent-red);
+    color: var(--text-primary);
+    border-color: var(--accent-red-darker);
+    font-weight: 500;
+}
+
+/* Style the file input label like a button */
+.file-label {
+    display: inline-block;
+    padding: 10px 18px;
+    background: var(--bg-lighter); /* Match mic/pronounce buttons */
+    color: var(--text-primary);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    margin-bottom: 10px; /* Add some spacing */
+     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.file-label:hover {
+    background: var(--bg-light);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+    transform: translateY(-1px);
+}
+.file-label input[type="file"] {
+    display: none; /* Hide the default ugly input */
+}
+
+#objectifier-camera-area {
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column;
+    align-items: center; /* Center video and buttons */
+    margin-bottom: 15px;
+}
+
+.camera-controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px; /* Space between video and buttons */
+}
+
+.cancel-btn { /* Specific style for cancel button */
+    background: var(--bg-lighter);
+    color: var(--text-secondary);
+}
+.cancel-btn:hover {
+    background: var(--bg-light);
+     color: var(--text-primary);
+}
+
+/* Style the preview area */
+.image-preview-area {
+    margin-top: 15px;
+    text-align: center;
+    min-height: 50px; /* Reserve some space even when empty */
+}
+.image-preview-area img {
+    max-width: 100%;
+    max-height: 250px;
+    border: 2px solid var(--bg-lighter);
+    border-radius: var(--border-radius);
+    background-color: var(--bg-dark);
+    padding: 5px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+}
+
+#objectifier-video-feed {
+    transform: scaleX(-1); /* Mirror the video feed for selfie view */
+    -webkit-transform: scaleX(-1);
+}
 
 /* 14. Loading/Thinking Indicator */
 .thinking-indicator {
