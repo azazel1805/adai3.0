@@ -1,16 +1,15 @@
 const CACHE_NAME = 'adai-cache-v1';
 // Add URLs of essential static assets needed for the app shell to work offline
 const urlsToCache = [
-  '/', // Cache the root page
+  '/', // Cache the root URL (index.html)
   '/static/css/style.css',
   '/static/js/script.js',
-  '/static/manifest.json',
-  // Add paths to your actual icons once created
-  '/static/images/icon-192.png',
-  '/static/images/icon-512.png',
-  // Add other critical assets like fonts if locally hosted
-  'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap', // Example external font
-  'https://fonts.gstatic.com/s/poppins/v20/pxiEyp8kv8JHgFVrJJfecg.woff2' // Example font file (inspect network tab)
+  '/static/js/pwa.js',      // <= Check this path
+  '/static/js/speech.js',   // <= Check this path
+  '/static/manifest.json',  // <= Check this path
+  '/static/images/logo.png', // <= Check this path (if you have it)
+  '/static/images/icons/icon-192x192.png', // <= Check this path
+  '/static/images/icons/icon-512x512.png'  // <= Check this path
 ];
 
 // Install event: Cache essential assets
