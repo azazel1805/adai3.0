@@ -408,28 +408,214 @@ document.addEventListener('DOMContentLoaded', () => {
     const objectifierFileInput = document.getElementById('objectifier-file');
     const objectifierPreview = document.getElementById('objectifier-preview');
     const objectifierSubmitBtn = document.getElementById('objectifier-submit-btn');
+    const objectifierShowUploadBtn = document.getElementById('objectifier-show-upload-btn');
+    const objectifierShowCameraBtn = document.getElementById('objectifier-show-camera-btn');
+    const objectifierUploadArea = document.getElementById('objectifier-upload-area');
+    const objectifierCameraArea = document.getElementById('objectifier-camera-area');
+    const objectifierVideoFeed = document.getElementById('objectifier-video-feed');
+    const objectifierCaptureBtn = document.getElementById('objectifier-capture-btn');
+    const objectifierCancelCameraBtn = document.getElementById('objectifier-cancel-camera-btn');
+    const objectifierCanvas = document.getElementById('objectifier-canvas');
+    const objectifierOutputArea = document.getElementById('objectifier-output');
 
+    let currentStream = null; // To hold the MediaStream object
+    let capturedImageBlob = null; // To hold the captured image blob
+
+    // --- Function to stop the camera stream ---
+    function stopCameraStream() {
+        if (currentStream) {
+            currentStream.getTracks().forEach(track => track.stop());
+            console.log("Camera stream stopped.");
+        }
+        currentStream = null;
+        objectifierVideoFeed.srcObject = null; // Clear video source
+    }
+
+    // --- Function to reset the objectifier state ---
+    function resetObjectifierState() {
+        stopCameraStream();
+        objectifierPreview.innerHTML = ''; // Clear preview
+        objectifierFileInput.value = null; // Clear file input
+        capturedImageBlob = null; // Clear captured blob
+        objectifierSubmitBtn.disabled = true; // Disable submit button
+        objectifierOutputArea.innerHTML = ''; // Clear output area
+        // Reset button active states if needed (optional)
+    }
+
+    // --- Event Listener for 'Use Camera' button ---
+    objectifierShowCameraBtn.addEventListener('click', async () => {
+        resetObjectifierState(); // Clear previous state
+        objectifierUploadArea.style.display = 'none';
+        objectifierCameraArea.style.display = 'flex'; // Use flex display
+        objectifierShowUploadBtn.classList.remove('active');
+        objectifierShowCameraBtn.classList.add('active');
+
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            try {
+                // Prioritize rear camera if possible (optional, might not work on all devices/browsers)
+                const constraints = {
+                    video: { facingMode: "environment" }, // Try for rear camera
+                    audio: false
+                };
+                 console.log("Attempting rear camera...");
+                currentStream = await navigator.mediaDevices.getUserMedia(constraints);
+            } catch (errRear) {
+                console.warn("Rear camera failed or not available, trying default:", errRear.name);
+                try {
+                    // Fallback to default camera
+                    const constraints = { video: true, audio: false };
+                     console.log("Attempting default camera...");
+                    currentStream = await navigator.mediaDevices.getUserMedia(constraints);
+                } catch (errDefault) {
+                    console.error("Error accessing camera:", errDefault.name, errDefault.message);
+                    alert(`Could not access camera: ${errDefault.name}. Please ensure permissions are granted.`);
+                    // Revert UI if camera fails
+                    objectifierUploadArea.style.display = 'block';
+                    objectifierCameraArea.style.display = 'none';
+                    objectifierShowUploadBtn.classList.add('active');
+                    objectifierShowCameraBtn.classList.remove('active');
+                    return; // Exit if no camera access
+                }
+            }
+
+             // If stream obtained successfully
+             console.log("Camera stream obtained.");
+             objectifierVideoFeed.srcObject = currentStream;
+             // Muted is set in HTML, play should work automatically
+
+        } else {
+            alert("Camera access (getUserMedia) is not supported by your browser.");
+             objectifierUploadArea.style.display = 'block';
+             objectifierCameraArea.style.display = 'none';
+             objectifierShowUploadBtn.classList.add('active');
+             objectifierShowCameraBtn.classList.remove('active');
+        }
+    });
+
+    // --- Event Listener for 'Upload File' button ---
+    objectifierShowUploadBtn.addEventListener('click', () => {
+        resetObjectifierState(); // Clear previous state
+        objectifierUploadArea.style.display = 'block';
+        objectifierCameraArea.style.display = 'none';
+        objectifierShowUploadBtn.classList.add('active');
+        objectifierShowCameraBtn.classList.remove('active');
+    });
+
+    // --- Event Listener for File Input Change ---
     objectifierFileInput.addEventListener('change', (event) => {
+        capturedImageBlob = null; // Clear any previously captured photo
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = (e) => {
+                // Show preview
                 objectifierPreview.innerHTML = `<img src="${e.target.result}" alt="Image preview">`;
+                 objectifierSubmitBtn.disabled = false; // Enable submit
             }
             reader.readAsDataURL(file);
-            objectifierSubmitBtn.disabled = false;
+            objectifierOutputArea.innerHTML = ''; // Clear previous output
         } else {
-             objectifierPreview.innerHTML = '';
-             objectifierSubmitBtn.disabled = true;
+            // No file selected or selection cancelled
+            objectifierPreview.innerHTML = '';
+            objectifierSubmitBtn.disabled = true;
         }
     });
 
-    objectifierSubmitBtn.addEventListener('click', () => {
-        const file = objectifierFileInput.files[0];
-        if (!file) return;
-        // Use the imageFile argument in callApi
-        callApi('objectifier', {}, file);
+    // --- Event Listener for 'Capture Photo' button ---
+    objectifierCaptureBtn.addEventListener('click', () => {
+        if (!currentStream) {
+            console.error("No camera stream available to capture from.");
+            return;
+        }
+
+        const context = objectifierCanvas.getContext('2d');
+        // Set canvas dimensions based on video element's actual displayed size
+        // Use videoWidth/videoHeight for intrinsic dimensions if needed, but clientWidth/Height might reflect CSS scaling
+        const videoWidth = objectifierVideoFeed.videoWidth;
+        const videoHeight = objectifierVideoFeed.videoHeight;
+
+        objectifierCanvas.width = videoWidth;
+        objectifierCanvas.height = videoHeight;
+
+        // Draw the mirrored video frame onto the canvas
+        context.save(); // Save context state
+        context.scale(-1, 1); // Flip horizontally
+        context.drawImage(objectifierVideoFeed, -videoWidth, 0, videoWidth, videoHeight); // Draw image, adjusting x-coordinate
+        context.restore(); // Restore context state (unflips the canvas context itself)
+
+
+        // Convert canvas to blob
+        objectifierCanvas.toBlob(blob => {
+            if (blob) {
+                capturedImageBlob = blob;
+                const imageURL = URL.createObjectURL(blob);
+                objectifierPreview.innerHTML = `<img src="${imageURL}" alt="Captured photo preview">`;
+                objectifierSubmitBtn.disabled = false; // Enable submit
+                objectifierFileInput.value = null; // Clear file input selection
+                objectifierOutputArea.innerHTML = ''; // Clear previous output
+
+                // Stop the camera and hide the view after capture
+                stopCameraStream();
+                objectifierCameraArea.style.display = 'none';
+                 // Optionally switch back to upload view? Or just leave it hidden?
+                 objectifierUploadArea.style.display = 'block'; // Show upload view again
+                 objectifierShowUploadBtn.classList.add('active');
+                 objectifierShowCameraBtn.classList.remove('active');
+
+            } else {
+                console.error("Failed to create blob from canvas.");
+                alert("Could not capture photo. Please try again.");
+                objectifierSubmitBtn.disabled = true;
+            }
+        }, 'image/jpeg', 0.9); // Save as JPEG with 90% quality (adjust type/quality if needed)
     });
+
+    // --- Event Listener for 'Cancel Camera' button ---
+    objectifierCancelCameraBtn.addEventListener('click', () => {
+        stopCameraStream();
+        objectifierCameraArea.style.display = 'none';
+        objectifierUploadArea.style.display = 'block'; // Show upload view again
+        objectifierShowUploadBtn.classList.add('active');
+        objectifierShowCameraBtn.classList.remove('active');
+        resetObjectifierState(); // Also clear preview/blob etc.
+    });
+
+    // --- Event Listener for 'Identify Object' button (Submit) ---
+    objectifierSubmitBtn.addEventListener('click', () => {
+        let imageToSend = null;
+        let source = '';
+
+        if (capturedImageBlob) {
+            imageToSend = capturedImageBlob;
+            source = 'camera capture';
+        } else if (objectifierFileInput.files && objectifierFileInput.files[0]) {
+            imageToSend = objectifierFileInput.files[0];
+            source = 'file upload';
+        }
+
+        if (!imageToSend) {
+            alert("Please select an image file or capture a photo first.");
+            return;
+        }
+
+        console.log(`Identifying object from: ${source}`);
+        objectifierOutputArea.innerHTML = ''; // Clear previous output
+
+        // Use the imageFile argument in callApi
+        // callApi expects the file/blob as the third argument
+        callApi('objectifier', {}, imageToSend); // Pass the blob or file directly
+    });
+
+    // --- Initial Setup for Objectifier ---
+    // Ensure submit button is disabled initially
+    objectifierSubmitBtn.disabled = true;
+    // Ensure camera area is hidden initially
+    objectifierCameraArea.style.display = 'none';
+    // Set Upload as the default active view
+     objectifierShowUploadBtn.classList.add('active');
+     objectifierShowCameraBtn.classList.remove('active');
+
+    // --- End Objectifier ---
 
      // --- Scenarist ---
     const scenaristCharSelect = document.getElementById('scenarist-char');
