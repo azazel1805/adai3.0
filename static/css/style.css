@@ -124,11 +124,20 @@ h1 {
 /* 4. Navigation */
 nav#tool-nav {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px; /* Slightly more gap */
-    width: 100%; /* Ensure nav takes full width if header uses flex */
-    margin-top: 0.5rem; /* Add space below H1 if needed */
+    /* REMOVE flex-wrap: wrap; */
+    /* Allow horizontal scrolling */
+    overflow-x: auto;
+    /* Prevent vertical scrollbars within the nav */
+    overflow-y: hidden;
+    /* Improve scroll behavior on touch devices */
+    -webkit-overflow-scrolling: touch;
+    /* Add some padding at the ends for better scrolling */
+    padding-left: 1rem;
+    padding-right: 1rem;
+    /* Prevent flex items from shrinking */
+    flex-shrink: 0;
+    /* Hide scrollbar visually (optional, affects usability) */
+    /* scrollbar-width: none; /* Firefox */
 }
 
 .nav-button {
@@ -142,6 +151,9 @@ nav#tool-nav {
     transition: all var(--transition-speed) ease; /* Smooth all transitions */
     position: relative; /* For pseudo-elements */
     overflow: hidden; /* For potential effects */
+    white-space: nowrap; /* Prevent text wrapping inside button */
+    flex-shrink: 0; /* Prevent button itself from shrinking */
+
 }
 
 .nav-button::before { /* Add subtle underline effect */
