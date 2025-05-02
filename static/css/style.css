@@ -70,6 +70,7 @@ h1 {
     font-weight: 700; /* Bold title */
     margin-bottom: 0.7rem;
     letter-spacing: 1px;
+    text-align: center;
     text-shadow: 0 0 5px rgba(212, 25, 0, 0.5); /* Subtle red shadow */
 }
 
