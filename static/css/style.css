@@ -1,4 +1,4 @@
-/* --- ADAI Enhanced Dark Futuristic Theme --- */
+/* --- ADAI Enhanced Dark Futuristic Theme - V2 --- */
 
 /* 1. Font Import & Variables */
 @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;700&display=swap'); /* Futuristic font */
@@ -37,7 +37,17 @@
 }
 
 body {
-    background: linear-gradient(135deg, var(--bg-darkest) 0%, var(--bg-dark) 100%); /* Subtle gradient background */
+    /* Subtle Noise Texture + Animated Gradient */
+    background-color: var(--bg-darkest); /* Fallback color */
+    background-image:
+        /* Noise layer */
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E"),
+        /* Gradient layer */
+        linear-gradient(135deg, var(--bg-darkest) 0%, var(--bg-dark) 50%, #202023 100%);
+    background-size: auto, 200% 200%; /* Noise auto size, Gradient size for animation */
+    background-position: 0 0, 50% 50%; /* Initial positions */
+    animation: gradientBG 25s ease infinite; /* Slower animation */
+
     color: var(--text-primary);
     font-family: var(--font-main);
     font-weight: 300; /* Lighter default weight */
@@ -46,10 +56,11 @@ body {
     overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
-/* ::selection { /* Style text selection */
-    background-color: var(--accent-red);
-    color: var(--bg-darkest);
-} */
+@keyframes gradientBG {
+    0% { background-position: 0 0, 0% 50%; }
+    50% { background-position: 0 0, 100% 50%; }
+    100% { background-position: 0 0, 0% 50%; }
+}
 
 /* 3. Header & Title */
 header {
@@ -62,7 +73,15 @@ header {
     z-index: 100;
     backdrop-filter: blur(10px); /* Frosted glass effect */
     -webkit-backdrop-filter: blur(10px);
+    transition: border-color 0.4s ease, box-shadow 0.4s ease; /* Add transition for potential scroll effects */
 }
+
+/* Optional: Style header when scrolled (may need JS for reliability) */
+/* body:has(main:not(:target)) header {
+    border-bottom-color: var(--accent-red);
+    box-shadow: 0 2px 10px rgba(212, 25, 0, 0.2);
+} */
+
 
 h1 {
     color: var(--accent-red);
@@ -70,8 +89,8 @@ h1 {
     font-weight: 700; /* Bold title */
     margin-bottom: 0.7rem;
     letter-spacing: 1px;
-    text-align: center;
     text-shadow: 0 0 5px rgba(212, 25, 0, 0.5); /* Subtle red shadow */
+    cursor: pointer; /* Make it look clickable */
 }
 
 .glowing-i {
@@ -108,6 +127,8 @@ nav#tool-nav {
     flex-wrap: wrap;
     justify-content: center;
     gap: 12px; /* Slightly more gap */
+    width: 100%; /* Ensure nav takes full width if header uses flex */
+    margin-top: 0.5rem; /* Add space below H1 if needed */
 }
 
 .nav-button {
@@ -140,8 +161,8 @@ nav#tool-nav {
     color: var(--text-primary); /* Brighter text on hover/focus */
     background-color: var(--bg-lighter);
     border-color: var(--accent-red-glow);
-    box-shadow: 0 0 8px rgba(255, 51, 0, 0.4); /* Subtle red glow */
-    transform: translateY(-2px); /* Slight lift */
+    box-shadow: 0 0 12px rgba(255, 51, 0, 0.5); /* Increase glow size */
+    transform: translateY(-3px); /* Increase lift */
     outline: none; /* Remove default focus outline */
 }
 
@@ -154,13 +175,15 @@ nav#tool-nav {
     color: var(--bg-darkest); /* Dark text on active */
     font-weight: 500; /* Slightly bolder */
     border-color: var(--accent-red-darker);
-    box-shadow: 0 0 12px var(--accent-red-glow), inset 0 0 5px rgba(0, 0, 0, 0.3); /* Stronger glow + inset shadow */
+    box-shadow: 0 0 15px var(--accent-red-glow), inset 0 0 8px rgba(0, 0, 0, 0.4); /* More intense glow + inset shadow */
     transform: translateY(0); /* Reset lift */
 }
 
 .nav-button.active::before {
     width: 100%; /* Full underline on active */
     background-color: var(--accent-yellow); /* Change underline color */
+    height: 3px; /* Thicker underline */
+    box-shadow: 0 0 5px var(--accent-yellow); /* Add glow to underline */
 }
 
 /* 5. Main Content Area */
@@ -170,13 +193,28 @@ main#main-content {
     padding: 1.5rem 2.5rem; /* More padding */
     background: linear-gradient(180deg, var(--bg-medium) 0%, #2a2a2a 100%); /* Darker gradient */
     border-radius: var(--border-radius);
-    border: 1px solid var(--bg-light);
-    box-shadow: 0 5px 25px rgba(212, 25, 0, 0.15); /* More pronounced red glow */
-    transition: box-shadow var(--transition-speed) ease;
+    /* Remove static border, use pseudo-element */
+    position: relative; /* Needed for pseudo-element */
+    z-index: 1;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3); /* Darker shadow */
+    background-clip: padding-box; /* Prevents background bleeding under border */
 }
 
-main#main-content:hover {
-     box-shadow: 0 8px 35px rgba(212, 25, 0, 0.25); /* Enhance glow on hover */
+/* Gradient border using pseudo-element */
+main#main-content::before {
+    content: '';
+    position: absolute;
+    inset: -1px; /* Position slightly outside */
+    border-radius: inherit; /* Match parent's border-radius */
+    background: linear-gradient(145deg, var(--accent-red-glow), var(--bg-light), var(--accent-red)); /* Gradient */
+    z-index: -1; /* Place behind the main content */
+    filter: blur(1px); /* Slightly blur the border gradient */
+    transition: filter 0.3s ease, background 0.4s ease; /* Smooth transition */
+}
+
+main#main-content:hover::before {
+    filter: blur(3px) brightness(1.2); /* Enhance blur/brightness on hover */
+    background: linear-gradient(145deg, var(--accent-yellow), var(--bg-light), var(--accent-red-glow)); /* Change gradient on hover */
 }
 
 
@@ -185,10 +223,16 @@ main#main-content:hover {
     border-bottom: 1px dashed var(--bg-light); /* Dashed border */
     padding-bottom: 2rem;
     margin-bottom: 2rem;
+    /* CSS-only animation (subtle fade-in based on display property change) */
+    /* This might not be as smooth as JS-driven class toggle */
+    /* transition: opacity 0.6s ease-out; */
 }
 .tool-section:last-child {
     border-bottom: none;
 }
+/* .tool-section:not(:active) { /* Not reliable without JS class */
+    /* opacity: 0; */
+/* } */
 
 .tool-section h2 {
     color: var(--accent-red);
@@ -233,21 +277,31 @@ select {
     margin-bottom: 15px; /* More margin */
     background-color: var(--bg-light);
     color: var(--text-primary);
-    border: 1px solid var(--bg-lighter);
+    border: 1px solid var(--bg-lighter); /* Base border */
     border-radius: var(--border-radius);
     font-size: 1rem;
     font-family: var(--font-main);
-    transition: all var(--transition-speed) ease;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.3); /* Inner shadow */
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.3); /* Base inset shadow */
+    transition: background-color var(--transition-speed) ease,
+                border-color var(--transition-speed) ease,
+                box-shadow 0.4s ease; /* Transition shadow back */
 }
 
 input[type="text"]:focus,
 textarea:focus,
 select:focus {
-    background-color: var(--bg-lighter); /* Darken background on focus */
-    border-color: var(--accent-red);
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.3), 0 0 8px rgba(212, 25, 0, 0.5); /* Inner shadow + Red glow */
-    outline: none; /* Remove default outline */
+    background-color: var(--bg-lighter);
+    border-color: var(--bg-lighter); /* Keep border subtle */
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.3); /* Keep inset */
+    outline: none;
+    /* Add animated outer glow */
+    animation: inputFocusGlow 0.8s ease forwards;
+}
+
+@keyframes inputFocusGlow {
+    0% { box-shadow: inset 0 1px 3px rgba(0,0,0,0.3), 0 0 0px rgba(212, 25, 0, 0.0); }
+    50% { box-shadow: inset 0 1px 3px rgba(0,0,0,0.3), 0 0 12px rgba(212, 25, 0, 0.6); }
+    100% { box-shadow: inset 0 1px 3px rgba(0,0,0,0.3), 0 0 8px rgba(212, 25, 0, 0.5); } /* End state */
 }
 
 textarea {
@@ -265,7 +319,9 @@ select {
 
 /* 9. Button Styling */
 button {
-    background: linear-gradient(180deg, var(--accent-red) 0%, var(--accent-red-darker) 100%); /* Gradient background */
+    background: linear-gradient(180deg, var(--accent-red) 0%, var(--accent-red-darker) 100%);
+    background-size: 100% 200%; /* Allow space for gradient shift */
+    background-position: 50% 0%; /* Start at top */
     color: var(--text-primary); /* White text on buttons */
     border: none;
     padding: 12px 22px; /* More padding */
@@ -274,14 +330,35 @@ button {
     font-size: 1rem;
     font-weight: 500; /* Bolder buttons */
     font-family: var(--font-main);
-    transition: all var(--transition-speed) ease;
     margin: 5px;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3), inset 0 -2px 0px rgba(0, 0, 0, 0.2); /* 3D effect */
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2); /* Text shadow for depth */
+    position: relative; /* Needed for pseudo-element */
+    overflow: hidden;   /* Keep shimmer inside */
+    transition: background-position var(--transition-speed) ease, /* Animate background pos */
+                transform var(--transition-speed) ease,
+                box-shadow var(--transition-speed) ease;
 }
 
-button:hover:not(:disabled) { /* Don't apply hover if disabled */
-    background: linear-gradient(0deg, var(--accent-red) 0%, var(--accent-red-darker) 100%); /* Invert gradient */
+/* Optional Shimmer effect (Uncomment if desired) */
+/* button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 75%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+    transition: left var(--transition-speed) cubic-bezier(0.23, 1, 0.32, 1);
+    transform: skewX(-25deg);
+}
+button:hover:not(:disabled)::before {
+    left: 125%;
+} */
+
+
+button:hover:not(:disabled) {
+    background-position: 50% 100%; /* Shift gradient to bottom */
     box-shadow: 0 4px 8px rgba(212, 25, 0, 0.4), inset 0 -2px 0px rgba(0, 0, 0, 0.2); /* Enhance shadow + glow */
     transform: translateY(-2px); /* Lift effect */
 }
@@ -304,19 +381,28 @@ button:disabled {
      box-shadow: inset 0 1px 3px rgba(0,0,0,0.3); /* Only inner shadow */
      text-shadow: none;
      transform: none;
+     background-image: none; /* Remove gradient */
+     background-size: auto;
+     background-position: initial;
 }
 
 /* Specific Button Styles (Mic, Pronounce) */
-#ada-mic-btn {
+#ada-mic-btn, #dictionary-pronounce-btn {
     background: var(--bg-lighter); /* Different base background */
     color: var(--text-primary);
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     text-shadow: none;
+    background-image: none; /* No gradient */
 }
-#ada-mic-btn:hover:not(:disabled) {
+#ada-mic-btn:hover:not(:disabled),
+#dictionary-pronounce-btn:hover:not(:disabled) {
      background: var(--bg-light);
      box-shadow: 0 3px 6px rgba(0,0,0,0.3);
      transform: translateY(-1px);
+     background-position: initial; /* Prevent gradient shift */
+}
+#dictionary-pronounce-btn:hover:not(:disabled) {
+     color: var(--accent-yellow); /* Highlight icon color */
 }
 
 #ada-mic-btn.recording { /* Style when recording */
@@ -331,18 +417,6 @@ button:disabled {
     100% { box-shadow: 0 0 5px var(--danger-red); }
 }
 
-#dictionary-pronounce-btn {
-     background: var(--bg-lighter); /* Same style as mic */
-     color: var(--text-primary);
-     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-     text-shadow: none;
-}
-#dictionary-pronounce-btn:hover:not(:disabled) {
-     background: var(--bg-light);
-     box-shadow: 0 3px 6px rgba(0,0,0,0.3);
-     transform: translateY(-1px);
-     color: var(--accent-yellow); /* Highlight icon color */
-}
 
 /* 10. Output Areas */
 .output-area {
@@ -358,23 +432,47 @@ button:disabled {
     box-shadow: inset 0 2px 5px rgba(0,0,0,0.4); /* Deeper inset shadow */
     line-height: 1.7; /* Better readability for output */
     font-size: 0.95rem;
+    position: relative; /* Needed for pseudo-element */
+    overflow: hidden; /* Keep scanlines inside */
 }
+
+/* Scanline effect */
+.output-area::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+    background-size: 100% 4px, 5px 100%; /* Adjust line thickness/spacing */
+    z-index: 1;
+    pointer-events: none;
+    animation: scanlines 30s linear infinite; /* Slower animation */
+    opacity: 0.6; /* Make scanlines subtler */
+}
+
+@keyframes scanlines {
+  from { background-position: 0 0, 0 0; }
+  to { background-position: 0 100%, 0 0; } /* Only animate vertical lines */
+}
+
 .output-area b { /* Style bold text from backend */
     color: var(--accent-yellow);
     font-weight: 500;
-    text-shadow: 0 0 3px rgba(255, 235, 59, 0.3); /* Subtle glow on bold */
+    text-shadow: 0 0 4px rgba(255, 235, 59, 0.4); /* Enhanced glow on bold */
 }
 .output-area > *:first-child {
-    margin-top: 0; /* Remove margin from first element inside */
+    margin-top: 0;
 }
 .output-area > *:last-child {
-    margin-bottom: 0; /* Remove margin from last element inside */
+    margin-bottom: 0;
 }
 
 
 /* 11. Chat Interfaces (Ada & Scenarist) */
 .chat-history {
-    max-height: 450px; /* Increase height */
+    max-height: 450px;
     overflow-y: auto;
     border: 1px solid var(--bg-light);
     padding: 15px;
@@ -406,32 +504,53 @@ button:disabled {
 .chat-history .user-message,
 .chat-history .model-message,
 .chat-history .system-message {
-    padding: 10px 15px; /* Increase padding */
+    padding: 10px 15px;
     margin-bottom: 10px;
     border-radius: 18px; /* More rounded */
-    max-width: 85%; /* Allow slightly wider bubbles */
+    max-width: 85%;
     word-wrap: break-word;
     line-height: 1.5;
-    position: relative; /* For potential future additions like timestamps */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3); /* Add shadow to bubbles */
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    /* Subtle pattern */
+    background-size: 30px 30px;
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.015) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.015) 75%, rgba(255, 255, 255, 0.015)),
+                      linear-gradient(-45deg, rgba(255, 255, 255, 0.015) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.015) 75%, rgba(255, 255, 255, 0.015));
+    /* Entry animation (CSS only - triggers on load/redraw) */
+    opacity: 0;
+    transform: translateY(10px);
+    animation: chatBubbleEntry 0.4s ease-out forwards;
 }
 
+
 .chat-history .user-message {
-    background: linear-gradient(135deg, var(--accent-red-glow) 0%, var(--accent-red) 100%); /* Red gradient */
+    /* background: linear-gradient(135deg, var(--accent-red-glow) 0%, var(--accent-red) 100%); */
+    background-color: var(--accent-red); /* Base color for pattern */
     color: white;
-    margin-left: auto; /* Align right */
-    border-bottom-right-radius: 5px; /* Slightly flatten corner */
+    margin-left: auto;
+    border-bottom-right-radius: 5px;
+    animation-delay: 0.1s; /* Delay user bubble slightly */
 }
 
 .chat-history .model-message {
-    background: linear-gradient(135deg, var(--accent-green-model) 0%, #3a8a40 100%); /* Green gradient */
+    /* background: linear-gradient(135deg, var(--accent-green-model) 0%, #3a8a40 100%); */
+    background-color: var(--accent-green-model); /* Base color for pattern */
     color: white;
-    margin-right: auto; /* Align left */
-    border-bottom-left-radius: 5px; /* Slightly flatten corner */
+    margin-right: auto;
+    border-bottom-left-radius: 5px;
 }
 
-.chat-history .system-message { /* Style for Scenarist start message */
+/* Keyframes for chat bubble entry */
+@keyframes chatBubbleEntry {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.chat-history .system-message {
      background: var(--bg-light);
+     background-image: none; /* No pattern on system message */
      color: var(--text-secondary);
      font-style: italic;
      text-align: center;
@@ -439,28 +558,31 @@ button:disabled {
      border-radius: var(--border-radius);
      box-shadow: none;
      font-size: 0.9em;
+     animation: none; /* No entry animation */
+     opacity: 1;
+     transform: none;
 }
 
 
 .chat-input-area {
     display: flex;
-    align-items: stretch; /* Make buttons same height as textarea */
+    align-items: stretch;
     gap: 10px;
 }
 .chat-input-area textarea {
     flex-grow: 1;
     margin-bottom: 0;
-    height: auto; /* Let height be determined by padding */
-    min-height: 45px; /* Set minimum height */
+    height: auto;
+    min-height: 45px;
     resize: none;
-    padding-top: 12px; /* Adjust padding to align text better */
+    padding-top: 12px;
     padding-bottom: 12px;
-    line-height: 1.4; /* Adjust line height */
+    line-height: 1.4;
 }
 .chat-input-area button {
-     flex-shrink: 0; /* Prevent buttons from shrinking */
-     height: auto; /* Match textarea height */
-     align-self: stretch; /* Explicitly stretch */
+     flex-shrink: 0;
+     height: auto;
+     align-self: stretch;
 }
 
 /* 12. Paraphraser Styles Checkboxes */
@@ -472,7 +594,7 @@ button:disabled {
 }
 .paraphraser-styles label {
     cursor: pointer;
-    display: inline-flex; /* Align checkbox and text */
+    display: inline-flex;
     align-items: center;
     gap: 5px;
     color: var(--text-secondary);
@@ -488,8 +610,9 @@ button:disabled {
      cursor: pointer;
      position: relative;
      transition: all var(--transition-speed) ease;
+     box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
 }
-.paraphraser-styles input[type="checkbox"]::before { /* Custom checkmark */
+.paraphraser-styles input[type="checkbox"]::before {
      content: '';
      position: absolute;
      top: 2px;
@@ -498,15 +621,16 @@ button:disabled {
      height: 8px;
      border: solid var(--accent-yellow);
      border-width: 0 2px 2px 0;
-     transform: rotate(45deg) scale(0); /* Hide initially */
+     transform: rotate(45deg) scale(0);
      transition: transform var(--transition-speed) ease;
 }
 .paraphraser-styles input[type="checkbox"]:checked {
     background-color: var(--accent-red);
     border-color: var(--accent-red-darker);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.3), 0 0 5px var(--accent-red-glow); /* Add glow when checked */
 }
 .paraphraser-styles input[type="checkbox"]:checked::before {
-    transform: rotate(45deg) scale(1); /* Show checkmark */
+    transform: rotate(45deg) scale(1);
 }
 .paraphraser-styles label:hover {
     color: var(--text-primary);
@@ -516,28 +640,15 @@ button:disabled {
 }
 
 
-/* 13. Objectifier Preview */
-#objectifier-preview {
-     margin-top: 15px;
-     text-align: center; /* Center preview image */
-}
-#objectifier-preview img {
-    max-width: 100%;
-    max-height: 250px; /* Allow slightly larger preview */
-    border: 2px solid var(--bg-lighter); /* Thicker border */
-    border-radius: var(--border-radius);
-    background-color: var(--bg-dark); /* Background in case image is transparent */
-    padding: 5px; /* Padding around image */
-    box-shadow: 0 3px 8px rgba(0,0,0,0.3);
-}
+/* 13. Objectifier Preview / Options / File Label */
 .objectifier-options {
     margin-bottom: 15px;
     display: flex;
     gap: 10px;
 }
 
-.option-btn { /* Style for Upload/Camera toggle buttons */
-    flex-grow: 1; /* Make buttons share space */
+.option-btn {
+    flex-grow: 1;
     background-color: var(--bg-light);
     color: var(--text-secondary);
     border: 1px solid var(--bg-lighter);
@@ -547,12 +658,10 @@ button:disabled {
     font-weight: 400;
     transition: all var(--transition-speed) ease;
 }
-
 .option-btn:hover {
     background-color: var(--bg-lighter);
     color: var(--text-primary);
 }
-
 .option-btn.active {
     background-color: var(--accent-red);
     color: var(--text-primary);
@@ -560,17 +669,16 @@ button:disabled {
     font-weight: 500;
 }
 
-/* Style the file input label like a button */
 .file-label {
     display: inline-block;
     padding: 10px 18px;
-    background: var(--bg-lighter); /* Match mic/pronounce buttons */
+    background: var(--bg-lighter);
     color: var(--text-primary);
     border-radius: var(--border-radius);
     cursor: pointer;
     transition: all var(--transition-speed) ease;
-    margin-bottom: 10px; /* Add some spacing */
-     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 .file-label:hover {
     background: var(--bg-light);
@@ -578,23 +686,23 @@ button:disabled {
     transform: translateY(-1px);
 }
 .file-label input[type="file"] {
-    display: none; /* Hide the default ugly input */
+    display: none;
 }
 
 #objectifier-camera-area {
-    display: flex; /* Use flexbox for layout */
+    display: flex;
     flex-direction: column;
-    align-items: center; /* Center video and buttons */
+    align-items: center;
     margin-bottom: 15px;
 }
 
 .camera-controls {
     display: flex;
     gap: 10px;
-    margin-top: 10px; /* Space between video and buttons */
+    margin-top: 10px;
 }
 
-.cancel-btn { /* Specific style for cancel button */
+.cancel-btn {
     background: var(--bg-lighter);
     color: var(--text-secondary);
 }
@@ -603,11 +711,10 @@ button:disabled {
      color: var(--text-primary);
 }
 
-/* Style the preview area */
 .image-preview-area {
     margin-top: 15px;
     text-align: center;
-    min-height: 50px; /* Reserve some space even when empty */
+    min-height: 50px;
 }
 .image-preview-area img {
     max-width: 100%;
@@ -620,45 +727,38 @@ button:disabled {
 }
 
 #objectifier-video-feed {
-    transform: scaleX(-1); /* Mirror the video feed for selfie view */
+    transform: scaleX(-1);
     -webkit-transform: scaleX(-1);
+    width: 100%;
+    max-width: 500px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    border: 1px solid var(--bg-light);
 }
 
 /* 14. Loading/Thinking Indicator */
+/* Uses spinner defined previously, needs JS to toggle 'active' class */
 .thinking-indicator {
-    display: flex; /* Use flex for centering */
-    justify-content: center;
-    align-items: center;
-    gap: 8px; /* Space between dots/text */
+    /* display: flex; /* Keep display control in JS/HTML */
+    /* justify-content: center; */
+    /* align-items: center; */
+    /* gap: 8px; */
     margin-top: 15px;
+    min-height: 2em; /* Reserve space */
     color: var(--accent-red-glow);
     font-style: italic;
     text-align: center;
-    min-height: 2em; /* Reserve space */
-    opacity: 0; /* Start hidden */
+    /* Apply animation directly when element is displayed */
     animation: fadeInPulse 1.5s infinite ease-in-out;
+    /* Ensure it's visible when display is not 'none' */
+    opacity: 1; /* Override opacity: 0 from previous attempts */
 }
 
-/* New thinking animation */
+/* Keyframes for the pulse/fade animation */
 @keyframes fadeInPulse {
-    0%, 100% { opacity: 0.5; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.05); }
+    0%, 100% { opacity: 0.6; transform: scale(1); } /* Start slightly faded */
+    50% { opacity: 1; transform: scale(1.03); } /* Fully opaque and slightly larger */
 }
-/* Optional: Add animated dots (uncomment if desired) */
-/* .thinking-indicator::before,
-.thinking-indicator::after {
-    content: '•';
-    font-size: 1.5em;
-    animation: thinkingDots 1.4s infinite ease-in-out both;
-}
-.thinking-indicator::after {
-    animation-delay: .2s;
-}
-@keyframes thinkingDots {
-  0%, 80%, 100% { transform: scale(0); }
-  40% { transform: scale(1.0); }
-} */
-
 
 /* 15. Accessibility helper */
 .visually-hidden {
@@ -701,6 +801,10 @@ button:disabled {
     }
     #home-tool .tool-descriptions {
         grid-template-columns: 1fr; /* Stack descriptions on small screens */
+    }
+     /* Adjust main content border for smaller screens */
+     main#main-content::before {
+        inset: -1px; /* Ensure it covers border area */
     }
 }
 
