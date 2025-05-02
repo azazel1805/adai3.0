@@ -55,7 +55,7 @@
 
         <!-- Ada Chatbot Section -->
         <section id="ada-tool" class="tool-section" style="display: none;">
-            <h2>Ada Chatbot</h2>
+            <h2>Ada</h2>
             <div id="ada-chat-history" class="chat-history"></div>
             <div class="chat-input-area">
                 <textarea id="ada-input" placeholder="Ask Ada anything..."></textarea>
@@ -183,15 +183,45 @@
         </section>
 
         <!-- Objectifier Section -->
+        <!-- Objectifier Section -->
         <section id="objectifier-tool" class="tool-section" style="display: none;">
             <h2>Objectifier</h2>
-            <p>Upload or take a photo to identify objects.</p>
-            <input type="file" id="objectifier-file" accept="image/*">
-            <!-- Add button for camera access if needed (more complex JS) -->
-            <button id="objectifier-submit-btn">Identify Object</button>
-            <div id="objectifier-preview"></div>
+            <p>Upload an image or take a photo to identify objects.</p>
+
+            <!-- Option Buttons -->
+            <div class="objectifier-options">
+                <button id="objectifier-show-upload-btn" class="option-btn active">Upload File</button>
+                <button id="objectifier-show-camera-btn" class="option-btn">Use Camera</button>
+            </div>
+
+            <!-- File Upload Area (Initially Visible) -->
+            <div id="objectifier-upload-area">
+                <label for="objectifier-file" class="file-label">
+                    <span>Choose Image File</span>
+                    <input type="file" id="objectifier-file" accept="image/*">
+                </label>
+            </div>
+
+            <!-- Camera Area (Initially Hidden) -->
+            <div id="objectifier-camera-area" style="display: none;">
+                <video id="objectifier-video-feed" playsinline autoplay muted style="width: 100%; max-width: 500px; border-radius: 5px; margin-bottom: 10px; border: 1px solid var(--bg-light);"></video>
+                <div class="camera-controls">
+                     <button id="objectifier-capture-btn">Capture Photo</button>
+                     <button id="objectifier-cancel-camera-btn" class="cancel-btn">Cancel Camera</button>
+                </div>
+                <!-- Hidden canvas for capturing frame -->
+                <canvas id="objectifier-canvas" style="display: none;"></canvas>
+            </div>
+
+            <!-- Submit Button (Common) -->
+            <button id="objectifier-submit-btn" disabled>Identify Object</button>
+
+            <!-- Preview and Output -->
+            <div id="objectifier-preview" class="image-preview-area">
+                 <!-- Preview image will be shown here -->
+            </div>
             <div id="objectifier-output" class="output-area"></div>
-             <div id="objectifier-thinking" class="thinking-indicator" style="display: none;">Analyzing Image...</div>
+            <div id="objectifier-thinking" class="thinking-indicator" style="display: none;">Analyzing Image...</div>
         </section>
 
         <!-- Scenarist Section -->
