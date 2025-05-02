@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
          }
     });
 
-    // --- Dictionary ---
+        // --- Dictionary ---
     // Get references to the DOM elements for the Dictionary tool
     const dictionaryLookupBtn = document.getElementById('dictionary-lookup-btn');
     const dictionaryWordInput = document.getElementById('dictionary-word');
@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add event listener for the main 'Lookup' button click
     dictionaryLookupBtn.addEventListener('click', async () => { // Make the handler asynchronous to use await
-        const word = dictionaryWordInput.value.trim(); // Get the word from the input field
+        const word = dictionaryWordInput.value.trim(); // Get and store the user's input word
         if (!word) return; // Do nothing if the input is empty
 
         // --- Reset UI State Before API Call ---
@@ -264,60 +264,59 @@ document.addEventListener('DOMContentLoaded', () => {
         if (dictionaryThinking) dictionaryThinking.style.display = 'block'; // Show the thinking indicator
         dictionaryLookupBtn.disabled = true; // Disable the lookup button during the request
 
+        let apiSuccess = false; // Flag to check if the API call completed without throwing an error
+
         try {
             // Call the backend API using the helper function 'callApi'
-            // Pass the tool name 'dictionary' and the word in the promptData object
-            // 'await' pauses execution until the API call completes and returns the result
             const resultHtml = await callApi('dictionary', { word: word });
-
-            // Display the full result HTML received from the backend API
-            dictionaryOutputArea.innerHTML = resultHtml;
+            apiSuccess = true; // Mark API call as successful if we reach here
+            dictionaryOutputArea.innerHTML = resultHtml; // Display the result
 
             // --- Attempt to Extract Pronunciation from the Result ---
             let pronunciationText = ''; // Variable to store the extracted pronunciation
-            // Create a temporary, in-memory div element to safely parse the HTML result
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = resultHtml; // Put the API result HTML into the temporary div
-
-            // Get the text content and split it into lines for easier searching
             const lines = tempDiv.innerText.split('\n');
-            // Loop through each line of the text content
             for (const line of lines) {
-                const cleanedLine = line.trim(); // Remove leading/trailing whitespace
-                // Check if the line starts with "Pronunciation:" (case-insensitive)
+                const cleanedLine = line.trim();
                 if (cleanedLine.toLowerCase().startsWith('pronunciation:')) {
-                    // Extract the text after "Pronunciation:"
+                    // Extract and clean the pronunciation text
                     pronunciationText = cleanedLine.substring('pronunciation:'.length).trim();
-                    // Further clean-up: Remove common parenthetical explanations like (IPA: ...) or similar using RegEx
                     pronunciationText = pronunciationText.replace(/\([\s\S]*?\)/g, '').trim();
-                    // Remove leading/trailing characters like slashes often found in phonetic notations
                     pronunciationText = pronunciationText.replace(/^[/\\|]|[/\\|]$/g, '').trim();
-                    // Optional: Remove any extra colons or dashes at the beginning if Gemini adds them
                     pronunciationText = pronunciationText.replace(/^[:\-]\s*/, '').trim();
-                    break; // Stop searching once the pronunciation line is found
+                    break; // Stop searching once found
                 }
             }
             // --- End Pronunciation Extraction ---
 
-            // Check if pronunciation text was found AND the speakText function is available (from speech.js)
-            if (pronunciationText && typeof speakText === 'function') {
-                console.log("Extracted Pronunciation:", pronunciationText);
-                // Store the extracted text in the button's data attribute for later use
-                dictionaryPronounceBtn.dataset.pronunciation = pronunciationText;
-                dictionaryPronounceBtn.style.display = 'inline-block'; // Make the pronunciation button visible
-                dictionaryPronounceBtn.disabled = false; // Enable the pronunciation button
+            // --- Setup Pronunciation Button ---
+            // Show the button IF the API call was successful AND the speakText function exists
+            if (apiSuccess && typeof speakText === 'function') {
+                // Determine what text the button should speak:
+                // Use the extracted pronunciation if found, otherwise fall back to the original input word.
+                const textToStoreForButton = pronunciationText ? pronunciationText : word;
+
+                console.log("Pronunciation extracted:", pronunciationText || "(Not found, using input word)");
+                console.log("Button will speak:", textToStoreForButton);
+
+                // Store the determined text in the button's data attribute
+                dictionaryPronounceBtn.dataset.pronunciation = textToStoreForButton;
+                dictionaryPronounceBtn.style.display = 'inline-block'; // Make the button visible
+                dictionaryPronounceBtn.disabled = false;                // Enable the button
             } else {
-                // Log if pronunciation wasn't found or speech synthesis isn't supported/available
-                console.log("Pronunciation text not found in result or speakText function unavailable.");
-                dictionaryPronounceBtn.style.display = 'none'; // Ensure the button remains hidden
+                // Log why the button isn't shown (API failed or speech function unavailable)
+                console.log("Pronunciation button NOT shown. API Success:", apiSuccess, "| speakText available:", typeof speakText === 'function');
+                dictionaryPronounceBtn.style.display = 'none'; // Ensure hidden
             }
+            // --- End Button Setup ---
 
         } catch (error) {
             // Log any errors during the API call or processing
-            // Note: The callApi function should already display the error in the output area
             console.error("Dictionary lookup process failed:", error);
-            // Ensure the pronunciation button remains hidden if an error occurred
+            // Ensure the button remains hidden if an error occurred
             dictionaryPronounceBtn.style.display = 'none';
+            // apiSuccess remains false
         } finally {
             // --- Final UI State Update (runs whether successful or not) ---
             if (dictionaryThinking) dictionaryThinking.style.display = 'none'; // Hide the thinking indicator
@@ -333,20 +332,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Add event listener for the pronunciation button click
+    // Add event listener for the pronunciation button click (NO CHANGE NEEDED HERE)
     dictionaryPronounceBtn.addEventListener('click', () => {
-        // Retrieve the stored pronunciation text from the button's data attribute
+        // Retrieve the stored pronunciation text (which might be the input word)
         const textToSpeak = dictionaryPronounceBtn.dataset.pronunciation;
         // Check if there's text to speak and the speakText function is available
         if (textToSpeak && typeof speakText === 'function') {
-            console.log("Speaking pronunciation:", textToSpeak);
-            speakText(textToSpeak); // Call the speech synthesis function (defined in speech.js)
+            console.log("Speaking:", textToSpeak);
+            speakText(textToSpeak); // Call the speech synthesis function
         } else {
             console.warn("No pronunciation data available to speak or speech function missing.");
-            // Optional: Provide user feedback if needed, e.g., briefly disable/change button appearance
         }
     });
-    // --- End Dictionary Tool Section --
+    // --- End Dictionary Tool Section ---
 
     // --- Text Corrector ---
     document.getElementById('text_corrector-submit-btn').addEventListener('click', () => {
