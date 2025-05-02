@@ -1,294 +1,632 @@
-/* Basic Reset & Dark Theme */
-body {
-    background-color: #1a1a1a; /* Dark background */
-    color: #e0e0e0; /* Light text */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+/* --- ADAI Enhanced Dark Futuristic Theme --- */
+
+/* 1. Font Import & Variables */
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;700&display=swap'); /* Futuristic font */
+
+:root {
+    --bg-darkest: #101010;       /* Even darker background */
+    --bg-dark: #1a1a1a;          /* Original dark background */
+    --bg-medium: #252525;        /* Original content background */
+    --bg-light: #333333;         /* Original input background */
+    --bg-lighter: #444444;       /* Lighter grey for accents/hovers */
+
+    --text-primary: #e0e0e0;     /* Light text */
+    --text-secondary: #aaaaaa;   /* Muted text */
+
+    --accent-red: #d41900;       /* Primary Red Accent */
+    --accent-red-darker: #c11300; /* Darker Red for Hover */
+    --accent-red-glow: #ff3300;   /* Brighter Red for Glow */
+
+    --accent-yellow: #ffeb3b;     /* Glow Yellow */
+    --accent-orange: #ffc107;     /* Glow Orange */
+
+    --accent-green-model: #4CAF50; /* Model chat bubble */
+    --danger-red: #f44336;       /* Recording/Error */
+
+    --font-main: 'Exo 2', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Futuristic font first */
+    --border-radius: 6px;        /* Slightly more pronounced radius */
+    --transition-speed: 0.25s;   /* Standard transition time */
+    --glow-intensity: 10px;      /* Base glow size */
+}
+
+/* 2. Basic Reset & Body Styling */
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+body {
+    background: linear-gradient(135deg, var(--bg-darkest) 0%, var(--bg-dark) 100%); /* Subtle gradient background */
+    color: var(--text-primary);
+    font-family: var(--font-main);
+    font-weight: 300; /* Lighter default weight */
     line-height: 1.6;
+    min-height: 100vh; /* Ensure gradient covers full height */
+    overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
+/* ::selection { /* Style text selection */
+    background-color: var(--accent-red);
+    color: var(--bg-darkest);
+} */
+
+/* 3. Header & Title */
 header {
-    background-color: #2c2c2c; /* Slightly lighter dark */
-    padding: 1rem 2rem;
+    background-color: rgba(44, 44, 44, 0.8); /* Slightly transparent dark grey */
+    padding: 1.2rem 2rem;
     text-align: center;
-    border-bottom: 1px solid #444;
+    border-bottom: 1px solid var(--bg-lighter);
+    position: sticky; /* Keep header on top */
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px); /* Frosted glass effect */
+    -webkit-backdrop-filter: blur(10px);
 }
 
-/* Glowing 'I' */
 h1 {
-    color: #d41900; /* Base color for ADA */
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
+    color: var(--accent-red);
+    font-size: 2.8rem; /* Increase size */
+    font-weight: 700; /* Bold title */
+    margin-bottom: 0.7rem;
+    letter-spacing: 1px;
+    text-shadow: 0 0 5px rgba(212, 25, 0, 0.5); /* Subtle red shadow */
 }
+
 .glowing-i {
-    color: #ffeb3b; /* Yellow */
-    text-shadow: 0 0 5px #ffeb3b,
-                 0 0 10px #ffeb3b,
-                 0 0 15px #ffc107, /* Slightly orange glow */
-                 0 0 20px #ffc107;
+    color: var(--accent-yellow);
+    font-weight: 700;
+    /* Enhanced glow animation */
+    text-shadow: 0 0 var(--glow-intensity) var(--accent-yellow),
+                 0 0 calc(var(--glow-intensity) * 2) var(--accent-yellow),
+                 0 0 calc(var(--glow-intensity) * 3) var(--accent-orange),
+                 0 0 calc(var(--glow-intensity) * 4) var(--accent-orange);
     animation: glow 1.5s ease-in-out infinite alternate;
 }
 
 @keyframes glow {
     from {
-        text-shadow: 0 0 5px #ffeb3b, 0 0 10px #ffeb3b, 0 0 15px #ffc107, 0 0 20px #ffc107;
+        text-shadow: 0 0 var(--glow-intensity) var(--accent-yellow),
+                     0 0 calc(var(--glow-intensity) * 1.5) var(--accent-yellow),
+                     0 0 calc(var(--glow-intensity) * 2) var(--accent-orange),
+                     0 0 calc(var(--glow-intensity) * 2.5) var(--accent-orange);
+        opacity: 0.9;
     }
     to {
-        text-shadow: 0 0 10px #ffeb3b, 0 0 20px #ffeb3b, 0 0 30px #ffc107, 0 0 40px #ffc107;
+        text-shadow: 0 0 calc(var(--glow-intensity) * 1.5) var(--accent-yellow),
+                     0 0 calc(var(--glow-intensity) * 2.5) var(--accent-yellow),
+                     0 0 calc(var(--glow-intensity) * 3.5) var(--accent-orange),
+                     0 0 calc(var(--glow-intensity) * 4.5) var(--accent-orange);
+        opacity: 1;
     }
 }
 
-
-/* Navigation */
+/* 4. Navigation */
 nav#tool-nav {
     display: flex;
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 10px; /* Spacing between buttons */
+    gap: 12px; /* Slightly more gap */
 }
 
 .nav-button {
-    background-color: #444;
-    color: #e0e0e0;
-    border: 1px solid #666;
-    padding: 8px 15px;
+    background-color: var(--bg-light);
+    color: var(--text-secondary); /* Muted color initially */
+    border: 1px solid var(--bg-lighter);
+    padding: 9px 18px; /* Slightly larger padding */
     cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    border-radius: var(--border-radius);
+    font-weight: 400; /* Normal weight */
+    transition: all var(--transition-speed) ease; /* Smooth all transitions */
+    position: relative; /* For pseudo-elements */
+    overflow: hidden; /* For potential effects */
 }
 
-.nav-button:hover {
-    background-color: #555;
+.nav-button::before { /* Add subtle underline effect */
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent-red);
+    transition: all var(--transition-speed) ease;
+    transform: translateX(-50%);
+}
+
+.nav-button:hover,
+.nav-button:focus {
+    color: var(--text-primary); /* Brighter text on hover/focus */
+    background-color: var(--bg-lighter);
+    border-color: var(--accent-red-glow);
+    box-shadow: 0 0 8px rgba(255, 51, 0, 0.4); /* Subtle red glow */
+    transform: translateY(-2px); /* Slight lift */
+    outline: none; /* Remove default focus outline */
+}
+
+.nav-button:hover::before {
+    width: 70%; /* Expand underline on hover */
 }
 
 .nav-button.active {
-    background-color: #d42300; /* Active tool color */
-    color: #1a1a1a;
-    font-weight: bold;
-    box-shadow: 0 0 8px #d40700;
+    background-color: var(--accent-red);
+    color: var(--bg-darkest); /* Dark text on active */
+    font-weight: 500; /* Slightly bolder */
+    border-color: var(--accent-red-darker);
+    box-shadow: 0 0 12px var(--accent-red-glow), inset 0 0 5px rgba(0, 0, 0, 0.3); /* Stronger glow + inset shadow */
+    transform: translateY(0); /* Reset lift */
 }
 
-/* Main Content Area */
+.nav-button.active::before {
+    width: 100%; /* Full underline on active */
+    background-color: var(--accent-yellow); /* Change underline color */
+}
+
+/* 5. Main Content Area */
 main#main-content {
-    max-width: 900px;
-    margin: 2rem auto;
-    padding: 1rem 2rem;
-    background-color: #252525; /* Content background */
-    border-radius: 8px;
-    box-shadow: 0 0 15px rgba(0, 188, 212, 0.1); /* Subtle glow */
+    max-width: 950px; /* Slightly wider */
+    margin: 2.5rem auto;
+    padding: 1.5rem 2.5rem; /* More padding */
+    background: linear-gradient(180deg, var(--bg-medium) 0%, #2a2a2a 100%); /* Darker gradient */
+    border-radius: var(--border-radius);
+    border: 1px solid var(--bg-light);
+    box-shadow: 0 5px 25px rgba(212, 25, 0, 0.15); /* More pronounced red glow */
+    transition: box-shadow var(--transition-speed) ease;
 }
 
-/* Tool Sections */
+main#main-content:hover {
+     box-shadow: 0 8px 35px rgba(212, 25, 0, 0.25); /* Enhance glow on hover */
+}
+
+
+/* 6. Tool Sections */
 .tool-section {
-    border-bottom: 1px solid #444;
-    padding-bottom: 1.5rem;
-    margin-bottom: 1.5rem;
+    border-bottom: 1px dashed var(--bg-light); /* Dashed border */
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
 }
 .tool-section:last-child {
     border-bottom: none;
 }
 
 .tool-section h2 {
-    color: #d40e00; /* Tool title color */
-    margin-bottom: 1rem;
-    border-bottom: 1px solid #444;
-    padding-bottom: 0.5rem;
+    color: var(--accent-red);
+    margin-bottom: 1.5rem; /* More space below title */
+    border-bottom: 1px solid var(--bg-light);
+    padding-bottom: 0.8rem; /* More space below title */
+    font-weight: 500; /* Slightly bolder */
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 3px rgba(212, 25, 0, 0.3);
 }
 
-/* Home Section Specifics */
+/* 7. Home Section Specifics */
 #home-tool .tool-descriptions {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem; /* Increased gap */
 }
 #home-tool .tool-desc {
-    background-color: #333;
-    padding: 1rem;
-    border-radius: 5px;
-    border-left: 3px solid #d41900;
+    background-color: var(--bg-light);
+    padding: 1.2rem;
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--accent-red);
+    transition: all var(--transition-speed) ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+#home-tool .tool-desc:hover {
+    transform: translateY(-5px) scale(1.02); /* Lift and scale on hover */
+    box-shadow: 0 6px 15px rgba(212, 25, 0, 0.2); /* Red glow on hover */
+    border-left-color: var(--accent-red-glow);
 }
 #home-tool .tool-desc b {
-     color: #ffeb3b; /* Highlight tool name */
+     color: var(--accent-yellow);
+     font-weight: 500;
 }
 
-/* Common Form Elements Styling */
+/* 8. Common Form Elements Styling */
 input[type="text"],
 textarea,
 select {
-    width: 95%; /* Responsive width */
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #333;
-    color: #e0e0e0;
-    border: 1px solid #555;
-    border-radius: 4px;
+    width: 100%; /* Use full width */
+    padding: 12px 15px; /* More padding */
+    margin-bottom: 15px; /* More margin */
+    background-color: var(--bg-light);
+    color: var(--text-primary);
+    border: 1px solid var(--bg-lighter);
+    border-radius: var(--border-radius);
     font-size: 1rem;
+    font-family: var(--font-main);
+    transition: all var(--transition-speed) ease;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.3); /* Inner shadow */
+}
+
+input[type="text"]:focus,
+textarea:focus,
+select:focus {
+    background-color: var(--bg-lighter); /* Darken background on focus */
+    border-color: var(--accent-red);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.3), 0 0 8px rgba(212, 25, 0, 0.5); /* Inner shadow + Red glow */
+    outline: none; /* Remove default outline */
 }
 
 textarea {
-    min-height: 100px;
-    resize: vertical; /* Allow vertical resize */
+    min-height: 120px;
+    resize: vertical;
 }
 
+select {
+    appearance: none; /* Custom select arrow */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23e0e0e0'%3E%3Cpath d='M6 8.825L.175 3 1.175 2 6 6.825 10.825 2 11.825 3z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    padding-right: 40px; /* Space for arrow */
+}
+
+/* 9. Button Styling */
 button {
-    background-color: #d41900; /* Action button color */
-    color: #1a1a1a;
+    background: linear-gradient(180deg, var(--accent-red) 0%, var(--accent-red-darker) 100%); /* Gradient background */
+    color: var(--text-primary); /* White text on buttons */
     border: none;
-    padding: 10px 18px;
-    border-radius: 5px;
+    padding: 12px 22px; /* More padding */
+    border-radius: var(--border-radius);
     cursor: pointer;
     font-size: 1rem;
-    transition: background-color 0.3s ease, transform 0.1s ease;
-    margin: 5px; /* Spacing around buttons */
+    font-weight: 500; /* Bolder buttons */
+    font-family: var(--font-main);
+    transition: all var(--transition-speed) ease;
+    margin: 5px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3), inset 0 -2px 0px rgba(0, 0, 0, 0.2); /* 3D effect */
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2); /* Text shadow for depth */
 }
 
-button:hover {
-    background-color: #c11300;
+button:hover:not(:disabled) { /* Don't apply hover if disabled */
+    background: linear-gradient(0deg, var(--accent-red) 0%, var(--accent-red-darker) 100%); /* Invert gradient */
+    box-shadow: 0 4px 8px rgba(212, 25, 0, 0.4), inset 0 -2px 0px rgba(0, 0, 0, 0.2); /* Enhance shadow + glow */
+    transform: translateY(-2px); /* Lift effect */
 }
-button:active {
-    transform: scale(0.98);
+
+button:active:not(:disabled) {
+    transform: translateY(1px); /* Push down effect */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(0, 0, 0, 0.3); /* Reduced shadow */
 }
+
+button:focus {
+     outline: 2px solid var(--accent-yellow); /* Yellow focus outline */
+     outline-offset: 2px;
+}
+
+
 button:disabled {
-     background-color: #555;
+     background: var(--bg-light); /* Grey background */
+     color: var(--text-secondary);
      cursor: not-allowed;
+     box-shadow: inset 0 1px 3px rgba(0,0,0,0.3); /* Only inner shadow */
+     text-shadow: none;
+     transform: none;
 }
 
-/* Output Areas */
+/* Specific Button Styles (Mic, Pronounce) */
+#ada-mic-btn {
+    background: var(--bg-lighter); /* Different base background */
+    color: var(--text-primary);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    text-shadow: none;
+}
+#ada-mic-btn:hover:not(:disabled) {
+     background: var(--bg-light);
+     box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+     transform: translateY(-1px);
+}
+
+#ada-mic-btn.recording { /* Style when recording */
+     background: var(--danger-red);
+     color: white;
+     box-shadow: 0 0 15px var(--danger-red);
+     animation: mic-pulse 1s infinite;
+}
+@keyframes mic-pulse {
+    0% { box-shadow: 0 0 5px var(--danger-red); }
+    50% { box-shadow: 0 0 15px var(--danger-red); }
+    100% { box-shadow: 0 0 5px var(--danger-red); }
+}
+
+#dictionary-pronounce-btn {
+     background: var(--bg-lighter); /* Same style as mic */
+     color: var(--text-primary);
+     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+     text-shadow: none;
+}
+#dictionary-pronounce-btn:hover:not(:disabled) {
+     background: var(--bg-light);
+     box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+     transform: translateY(-1px);
+     color: var(--accent-yellow); /* Highlight icon color */
+}
+
+/* 10. Output Areas */
 .output-area {
-    background-color: #1f1f1f; /* Slightly different dark */
-    border: 1px solid #444;
-    padding: 15px;
-    margin-top: 15px;
-    border-radius: 5px;
-    min-height: 100px;
-    white-space: pre-wrap; /* Preserve line breaks from backend */
-    word-wrap: break-word; /* Prevent long words overflowing */
+    background-color: var(--bg-dark); /* Darker output */
+    border: 1px solid var(--bg-light);
+    padding: 20px; /* More padding */
+    margin-top: 20px;
+    border-radius: var(--border-radius);
+    min-height: 120px; /* Increased min height */
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: var(--text-secondary); /* Slightly muted base text */
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.4); /* Deeper inset shadow */
+    line-height: 1.7; /* Better readability for output */
+    font-size: 0.95rem;
 }
 .output-area b { /* Style bold text from backend */
-    color: #ffeb3b;
-    font-weight: bold;
+    color: var(--accent-yellow);
+    font-weight: 500;
+    text-shadow: 0 0 3px rgba(255, 235, 59, 0.3); /* Subtle glow on bold */
+}
+.output-area > *:first-child {
+    margin-top: 0; /* Remove margin from first element inside */
+}
+.output-area > *:last-child {
+    margin-bottom: 0; /* Remove margin from last element inside */
 }
 
-/* Chat Interfaces (Ada & Scenarist) */
+
+/* 11. Chat Interfaces (Ada & Scenarist) */
 .chat-history {
-    max-height: 400px;
+    max-height: 450px; /* Increase height */
     overflow-y: auto;
-    border: 1px solid #444;
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #1f1f1f;
-    border-radius: 5px;
+    border: 1px solid var(--bg-light);
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: var(--bg-dark); /* Match output area */
+    border-radius: var(--border-radius);
+    box-shadow: inset 0 3px 8px rgba(0,0,0,0.5); /* Stronger inset shadow */
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: var(--bg-lighter) var(--bg-dark); /* Firefox */
 }
+/* Webkit scrollbar styling */
+.chat-history::-webkit-scrollbar {
+    width: 8px;
+}
+.chat-history::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+    border-radius: 4px;
+}
+.chat-history::-webkit-scrollbar-thumb {
+    background-color: var(--bg-lighter);
+    border-radius: 4px;
+    border: 2px solid var(--bg-dark);
+}
+.chat-history::-webkit-scrollbar-thumb:hover {
+    background-color: var(--accent-red);
+}
+
+
 .chat-history .user-message,
-.chat-history .model-message {
-    padding: 8px 12px;
-    margin-bottom: 8px;
-    border-radius: 15px;
-    max-width: 80%;
+.chat-history .model-message,
+.chat-history .system-message {
+    padding: 10px 15px; /* Increase padding */
+    margin-bottom: 10px;
+    border-radius: 18px; /* More rounded */
+    max-width: 85%; /* Allow slightly wider bubbles */
     word-wrap: break-word;
+    line-height: 1.5;
+    position: relative; /* For potential future additions like timestamps */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3); /* Add shadow to bubbles */
 }
+
 .chat-history .user-message {
-    background-color: #ff3300; /* User bubble color */
+    background: linear-gradient(135deg, var(--accent-red-glow) 0%, var(--accent-red) 100%); /* Red gradient */
     color: white;
     margin-left: auto; /* Align right */
-    border-bottom-right-radius: 3px;
+    border-bottom-right-radius: 5px; /* Slightly flatten corner */
 }
+
 .chat-history .model-message {
-    background-color: #4CAF50; /* Model bubble color */
+    background: linear-gradient(135deg, var(--accent-green-model) 0%, #3a8a40 100%); /* Green gradient */
     color: white;
     margin-right: auto; /* Align left */
-    border-bottom-left-radius: 3px;
+    border-bottom-left-radius: 5px; /* Slightly flatten corner */
 }
+
+.chat-history .system-message { /* Style for Scenarist start message */
+     background: var(--bg-light);
+     color: var(--text-secondary);
+     font-style: italic;
+     text-align: center;
+     max-width: 100%;
+     border-radius: var(--border-radius);
+     box-shadow: none;
+     font-size: 0.9em;
+}
+
+
 .chat-input-area {
     display: flex;
-    align-items: center; /* Align items vertically */
+    align-items: stretch; /* Make buttons same height as textarea */
     gap: 10px;
 }
 .chat-input-area textarea {
-    flex-grow: 1; /* Text area takes available space */
-    margin-bottom: 0; /* Remove default margin */
-    height: 40px; /* Adjust height */
-    resize: none; /* Disable textarea resize */
+    flex-grow: 1;
+    margin-bottom: 0;
+    height: auto; /* Let height be determined by padding */
+    min-height: 45px; /* Set minimum height */
+    resize: none;
+    padding-top: 12px; /* Adjust padding to align text better */
+    padding-bottom: 12px;
+    line-height: 1.4; /* Adjust line height */
+}
+.chat-input-area button {
+     flex-shrink: 0; /* Prevent buttons from shrinking */
+     height: auto; /* Match textarea height */
+     align-self: stretch; /* Explicitly stretch */
 }
 
-/* Mic/Mute Buttons (Example) */
-#ada-mic-btn, #ada-mute-btn {
-    padding: 8px;
-    font-size: 1.2rem;
-    min-width: 40px; /* Ensure buttons have size */
+/* 12. Paraphraser Styles Checkboxes */
+.paraphraser-styles {
+    margin-bottom: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
 }
-#ada-mic-btn.recording { /* Style when recording */
-     background-color: #f44336; /* Red */
-     color: white;
-     box-shadow: 0 0 10px #f44336;
-}
-
-/* Paraphraser Styles Checkboxes */
 .paraphraser-styles label {
-    margin-right: 15px;
     cursor: pointer;
+    display: inline-flex; /* Align checkbox and text */
+    align-items: center;
+    gap: 5px;
+    color: var(--text-secondary);
+    transition: color var(--transition-speed) ease;
+}
+.paraphraser-styles input[type="checkbox"] {
+     appearance: none;
+     width: 16px;
+     height: 16px;
+     border: 1px solid var(--bg-lighter);
+     border-radius: 3px;
+     background-color: var(--bg-light);
+     cursor: pointer;
+     position: relative;
+     transition: all var(--transition-speed) ease;
+}
+.paraphraser-styles input[type="checkbox"]::before { /* Custom checkmark */
+     content: '';
+     position: absolute;
+     top: 2px;
+     left: 5px;
+     width: 4px;
+     height: 8px;
+     border: solid var(--accent-yellow);
+     border-width: 0 2px 2px 0;
+     transform: rotate(45deg) scale(0); /* Hide initially */
+     transition: transform var(--transition-speed) ease;
+}
+.paraphraser-styles input[type="checkbox"]:checked {
+    background-color: var(--accent-red);
+    border-color: var(--accent-red-darker);
+}
+.paraphraser-styles input[type="checkbox"]:checked::before {
+    transform: rotate(45deg) scale(1); /* Show checkmark */
+}
+.paraphraser-styles label:hover {
+    color: var(--text-primary);
+}
+.paraphraser-styles label:hover input[type="checkbox"] {
+    border-color: var(--accent-red);
 }
 
-/* Objectifier Preview */
+
+/* 13. Objectifier Preview */
+#objectifier-preview {
+     margin-top: 15px;
+     text-align: center; /* Center preview image */
+}
 #objectifier-preview img {
     max-width: 100%;
-    max-height: 200px;
-    margin-top: 10px;
-    border: 1px solid #555;
-    border-radius: 4px;
+    max-height: 250px; /* Allow slightly larger preview */
+    border: 2px solid var(--bg-lighter); /* Thicker border */
+    border-radius: var(--border-radius);
+    background-color: var(--bg-dark); /* Background in case image is transparent */
+    padding: 5px; /* Padding around image */
+    box-shadow: 0 3px 8px rgba(0,0,0,0.3);
 }
-/* Accessibility helper */
+
+/* 14. Loading/Thinking Indicator */
+.thinking-indicator {
+    display: flex; /* Use flex for centering */
+    justify-content: center;
+    align-items: center;
+    gap: 8px; /* Space between dots/text */
+    margin-top: 15px;
+    color: var(--accent-red-glow);
+    font-style: italic;
+    text-align: center;
+    min-height: 2em; /* Reserve space */
+    opacity: 0; /* Start hidden */
+    animation: fadeInPulse 1.5s infinite ease-in-out;
+}
+
+/* New thinking animation */
+@keyframes fadeInPulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+}
+/* Optional: Add animated dots (uncomment if desired) */
+/* .thinking-indicator::before,
+.thinking-indicator::after {
+    content: '•';
+    font-size: 1.5em;
+    animation: thinkingDots 1.4s infinite ease-in-out both;
+}
+.thinking-indicator::after {
+    animation-delay: .2s;
+}
+@keyframes thinkingDots {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1.0); }
+} */
+
+
+/* 15. Accessibility helper */
 .visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
+  position: absolute !important; /* Ensure override */
+  height: 1px; width: 1px;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap; /* Added */
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap; /* Prevent line breaks */
   border: 0;
 }
 
-/* Loading/Thinking Indicator */
-.thinking-indicator {
-    margin-top: 10px;
-    color: #d40000;
-    font-style: italic;
-    text-align: center;
-    /* Add a subtle animation */
-     animation: pulse 1.5s infinite ease-in-out;
-}
 
-
-
-@keyframes pulse {
-    0% { opacity: 0.5; }
-    50% { opacity: 1; }
-    100% { opacity: 0.5; }
-}
-
-/* Responsive Design */
+/* 16. Responsive Design */
 @media (max-width: 768px) {
     header {
         padding: 1rem;
     }
     h1 {
-        font-size: 2rem;
+        font-size: 2.2rem; /* Adjust title size */
     }
     main#main-content {
-        margin: 1rem;
-        padding: 1rem;
+        margin: 1.5rem 1rem; /* Adjust margins */
+        padding: 1rem 1.5rem; /* Adjust padding */
     }
     nav#tool-nav {
-        gap: 5px;
+        gap: 8px; /* Reduce gap */
     }
     .nav-button {
-        padding: 6px 10px;
+        padding: 7px 12px; /* Adjust padding */
         font-size: 0.9rem;
     }
     .chat-input-area {
-        flex-wrap: wrap; /* Allow buttons to wrap below textarea */
+        flex-wrap: wrap; /* Allow buttons to wrap */
     }
+    .chat-input-area textarea {
+        min-height: 40px; /* Adjust min height */
+    }
+    .tool-section h2 {
+        font-size: 1.3rem; /* Adjust section title size */
+    }
+    #home-tool .tool-descriptions {
+        grid-template-columns: 1fr; /* Stack descriptions on small screens */
+    }
+}
+
+/* 17. Custom Scrollbar (Whole page) */
+body::-webkit-scrollbar {
+    width: 10px;
+}
+body::-webkit-scrollbar-track {
+    background: var(--bg-darkest);
+}
+body::-webkit-scrollbar-thumb {
+    background-color: var(--bg-light);
+    border-radius: 5px;
+    border: 2px solid var(--bg-darkest);
+}
+body::-webkit-scrollbar-thumb:hover {
+    background-color: var(--accent-red);
+}
+/* Firefox scrollbar */
+body {
+    scrollbar-width: thin;
+    scrollbar-color: var(--bg-light) var(--bg-darkest);
 }
