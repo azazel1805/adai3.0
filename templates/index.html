@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADAI - AI Tools</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    <meta name="theme-color" content="#2c2c2c"/> <!-- Dark theme color -->
+    <!-- Add links to PWA icons for favicon/homescreen -->
+    <link rel="icon" href="{{ url_for('static', filename='images/icons/icon-192x192.png') }}" type="image/png">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/icons/icon-192x192.png') }}">
+</head>
+<body>
+    <header>
+        <h1>ADA<span class="glowing-i">I</span></h1>
+        <nav id="tool-nav">
+            <!-- Tool buttons will be dynamically added or listed here -->
+            <button class="nav-button active" data-tool="home">Home</button>
+            <button class="nav-button" data-tool="ada">Ada</button>
+            <button class="nav-button" data-tool="taleteller">Taleteller</button>
+            <button class="nav-button" data-tool="dictionary">Dictionary</button>
+            <button class="nav-button" data-tool="text_corrector">Text Corrector</button>
+            <button class="nav-button" data-tool="grammar_monster">Grammar Monster</button>
+            <button class="nav-button" data-tool="essayer">Essayer</button>
+            <button class="nav-button" data-tool="paraphraser">Paraphraser</button>
+            <button class="nav-button" data-tool="summarizer">Summarizer</button>
+            <button class="nav-button" data-tool="transexplainer">Transexplainer</button>
+            <button class="nav-button" data-tool="objectifier">Objectifier</button>
+            <button class="nav-button" data-tool="scenarist">Scenarist</button>
+        </nav>
+    </header>
+
+    <main id="main-content">
+
+        <!-- Home Section (Visible by default) -->
+        <section id="home-tool" class="tool-section active">
+            <h2>Welcome to ADAI!</h2>
+            <p>Your suite of intelligent tools powered by Gemini.</p>
+            <div class="tool-descriptions">
+                <!-- Add short descriptions for each tool -->
+                <div class="tool-desc"><b>Ada:</b> A conversational AI for general chat, featuring voice input.</div>
+                <div class="tool-desc"><b>Taleteller:</b> Generate unique stories based on your prompts.</div>
+                <div class="tool-desc"><b>Dictionary:</b> Get definitions, pronunciations, translations, and more.</div>
+                <div class="tool-desc"><b>Text Corrector:</b> Improve your writing with corrections and feedback.</div>
+                <div class="tool-desc"><b>Grammar Monster:</b> Master grammar rules with detailed explanations.</div>
+                <div class="tool-desc"><b>Essayer:</b> Generate essay outlines or full drafts on any topic.</div>
+                <div class="tool-desc"><b>Paraphraser:</b> Rephrase text in various styles.</div>
+                <div class="tool-desc"><b>Summarizer:</b> Get the key points from long texts.</div>
+                <div class="tool-desc"><b>Transexplainer:</b> Translate text and understand the nuances.</div>
+                <div class="tool-desc"><b>Objectifier:</b> Identify objects in images.</div>
+                <div class="tool-desc"><b>Scenarist:</b> Chat with AI characters in specific scenarios.</div>
+            </div>
+        </section>
+
+        <!-- Ada Chatbot Section -->
+        <section id="ada-tool" class="tool-section" style="display: none;">
+            <h2>Ada Chatbot</h2>
+            <div id="ada-chat-history" class="chat-history"></div>
+            <div class="chat-input-area">
+                <textarea id="ada-input" placeholder="Ask Ada anything..."></textarea>
+                <button id="ada-send-btn">Send</button>
+                <button id="ada-mic-btn">🎤</button>
+                <button id="ada-mute-btn">🔊</button> <!-- Toggle Mute/Unmute -->
+            </div>
+             <div id="ada-thinking" class="thinking-indicator" style="display: none;">Ada is thinking...</div>
+        </section>
+
+        <!-- Taleteller Section -->
+        <section id="taleteller-tool" class="tool-section" style="display: none;">
+            <h2>Taleteller</h2>
+            <input type="text" id="taleteller-chars" placeholder="Character Name(s)">
+            <select id="taleteller-type">
+                <option value="fantasy">Fantasy</option>
+                <option value="sci-fi">Sci-Fi</option>
+                <option value="mystery">Mystery</option>
+                <option value="adventure">Adventure</option>
+                <option value="horror">Horror</option>
+                <option value="romance">Romance</option>
+            </select>
+            <input type="text" id="taleteller-setting" placeholder="Setting">
+            <select id="taleteller-length">
+                <option value="short">Short</option>
+                <option value="medium">Medium</option>
+                <option value="long">Long</option>
+            </select>
+            <select id="taleteller-level">
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+            <button id="taleteller-generate-btn">Generate New Story</button>
+            <hr>
+            <div id="taleteller-output" class="output-area"></div>
+             <div id="taleteller-thinking" class="thinking-indicator" style="display: none;">Generating...</div>
+            <button id="taleteller-continue-btn" style="display: none;">Continue Story</button>
+            <button id="taleteller-end-btn" style="display: none;">End Story</button>
+        </section>
+
+        <!-- Dictionary Section -->
+        <section id="dictionary-tool" class="tool-section" style="display: none;">
+            <h2>Dictionary</h2>
+            <input type="text" id="dictionary-word" placeholder="Enter word or phrase">
+            <button id="dictionary-lookup-btn">Lookup</button>
+<button id="dictionary-pronounce-btn" style="display: none; margin-left: 10px; vertical-align: top;" title="Speak Pronunciation">
+                🔊 <span class="visually-hidden">Speak Pronunciation</span>
+            </button>
+            <div id="dictionary-output" class="output-area"></div>
+
+             <div id="dictionary-thinking" class="thinking-indicator" style="display: none;">Looking up...</div>
+        </section>
+
+        <!-- Text Corrector Section -->
+        <section id="text_corrector-tool" class="tool-section" style="display: none;">
+            <h2>Text Corrector</h2>
+            <textarea id="text_corrector-input" placeholder="Enter text to correct..."></textarea>
+            <button id="text_corrector-submit-btn">Correct & Explain</button>
+            <div id="text_corrector-output" class="output-area"></div>
+             <div id="text_corrector-thinking" class="thinking-indicator" style="display: none;">Correcting...</div>
+        </section>
+
+        <!-- Grammar Monster Section -->
+        <section id="grammar_monster-tool" class="tool-section" style="display: none;">
+            <h2>Grammar Monster</h2>
+            <input type="text" id="grammar_monster-topic" placeholder="Enter grammar topic (e.g., 'past perfect tense')">
+            <button id="grammar_monster-explain-btn">Explain</button>
+            <div id="grammar_monster-output" class="output-area"></div>
+             <div id="grammar_monster-thinking" class="thinking-indicator" style="display: none;">Explaining...</div>
+        </section>
+
+        <!-- Essayer Section -->
+        <section id="essayer-tool" class="tool-section" style="display: none;">
+            <h2>Essayer</h2>
+            <input type="text" id="essayer-topic" placeholder="Essay Topic">
+            <select id="essayer-type">
+                <option value="argumentative">Argumentative</option>
+                <option value="persuasive">Persuasive</option>
+                <option value="expository">Expository</option>
+                <option value="narrative">Narrative</option>
+                <option value="descriptive">Descriptive</option>
+                <option value="compare_contrast">Compare & Contrast</option>
+                <!-- Add more types -->
+            </select>
+            <button id="essayer-outline-btn">Generate Outline</button>
+            <button id="essayer-full-btn">Generate Full Essay</button>
+            <div id="essayer-output" class="output-area"></div>
+             <div id="essayer-thinking" class="thinking-indicator" style="display: none;">Generating...</div>
+        </section>
+
+        <!-- Paraphraser Section -->
+        <section id="paraphraser-tool" class="tool-section" style="display: none;">
+            <h2>Paraphraser</h2>
+            <textarea id="paraphraser-input" placeholder="Enter text to rephrase..."></textarea>
+            <div class="paraphraser-styles">
+                <label><input type="checkbox" name="paraphraser-style" value="formal" checked> Formal</label>
+                <label><input type="checkbox" name="paraphraser-style" value="informal"> Informal</label>
+                <label><input type="checkbox" name="paraphraser-style" value="simpler"> Simpler</label>
+                <label><input type="checkbox" name="paraphraser-style" value="complex"> More Complex</label>
+                <label><input type="checkbox" name="paraphraser-style" value="creative"> Creative</label>
+            </div>
+            <button id="paraphraser-submit-btn">Rephrase</button>
+            <div id="paraphraser-output" class="output-area"></div>
+             <div id="paraphraser-thinking" class="thinking-indicator" style="display: none;">Rephrasing...</div>
+        </section>
+
+        <!-- Summarizer Section -->
+        <section id="summarizer-tool" class="tool-section" style="display: none;">
+            <h2>Summarizer</h2>
+            <textarea id="summarizer-input" placeholder="Enter text to summarize..."></textarea>
+            <button id="summarizer-submit-btn">Summarize</button>
+            <div id="summarizer-output" class="output-area"></div>
+             <div id="summarizer-thinking" class="thinking-indicator" style="display: none;">Summarizing...</div>
+        </section>
+
+        <!-- Transexplainer Section -->
+        <section id="transexplainer-tool" class="tool-section" style="display: none;">
+            <h2>Transexplainer</h2>
+             <input type="text" id="transexplainer-lang" placeholder="Source Language (e.g., Turkish, default)">
+            <textarea id="transexplainer-input" placeholder="Enter text to translate and explain..."></textarea>
+            <button id="transexplainer-submit-btn">Translate & Explain</button>
+            <div id="transexplainer-output" class="output-area"></div>
+             <div id="transexplainer-thinking" class="thinking-indicator" style="display: none;">Translating...</div>
+        </section>
+
+        <!-- Objectifier Section -->
+        <section id="objectifier-tool" class="tool-section" style="display: none;">
+            <h2>Objectifier</h2>
+            <p>Upload or take a photo to identify objects.</p>
+            <input type="file" id="objectifier-file" accept="image/*">
+            <!-- Add button for camera access if needed (more complex JS) -->
+            <button id="objectifier-submit-btn">Identify Object</button>
+            <div id="objectifier-preview"></div>
+            <div id="objectifier-output" class="output-area"></div>
+             <div id="objectifier-thinking" class="thinking-indicator" style="display: none;">Analyzing Image...</div>
+        </section>
+
+        <!-- Scenarist Section -->
+        <section id="scenarist-tool" class="tool-section" style="display: none;">
+             <h2>Scenarist</h2>
+             <div class="scenarist-setup">
+                 <label for="scenarist-char">Character:</label>
+                 <select id="scenarist-char">
+                     <option value="friendly barista">Friendly Barista</option>
+                     <option value="stressed traveller">Stressed Traveller</option>
+                     <option value="calm doctor">Calm Doctor</option>
+                     <option value="strict interviewer">Strict Interviewer</option>
+                     <option value="curious stranger">Curious Stranger</option>
+                     <!-- Add more -->
+                 </select>
+                 <label for="scenarist-scenario">Scenario:</label>
+                  <select id="scenarist-scenario">
+                     <option value="in a cozy cafe">In a cozy cafe</option>
+                     <option value="in a busy airport terminal">In a busy airport terminal</option>
+                     <option value="in a hospital waiting room">In a hospital waiting room</option>
+                     <option value="in a formal job interview">In a formal job interview</option>
+                     <option value="on a park bench">On a park bench</option>
+                      <!-- Add more -->
+                 </select>
+                 <button id="scenarist-start-btn">Start Scenario</button>
+            </div>
+             <div id="scenarist-chat-history" class="chat-history"></div>
+             <div class="chat-input-area">
+                 <textarea id="scenarist-input" placeholder="Your message..." disabled></textarea>
+                 <button id="scenarist-send-btn" disabled>Send</button>
+             </div>
+              <div id="scenarist-thinking" class="thinking-indicator" style="display: none;">Character is thinking...</div>
+         </section>
+
+    </main>
+
+    <footer>
+        <!-- Footer content -->
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/speech.js') }}"></script> <!-- Load Speech API handling first if separate -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/pwa.js') }}"></script> <!-- PWA registration -->
+
+</body>
+</html>

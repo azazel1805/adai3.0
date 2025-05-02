@@ -1,0 +1,294 @@
+/* Basic Reset & Dark Theme */
+body {
+    background-color: #1a1a1a; /* Dark background */
+    color: #e0e0e0; /* Light text */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+header {
+    background-color: #2c2c2c; /* Slightly lighter dark */
+    padding: 1rem 2rem;
+    text-align: center;
+    border-bottom: 1px solid #444;
+}
+
+/* Glowing 'I' */
+h1 {
+    color: #d41900; /* Base color for ADA */
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+.glowing-i {
+    color: #ffeb3b; /* Yellow */
+    text-shadow: 0 0 5px #ffeb3b,
+                 0 0 10px #ffeb3b,
+                 0 0 15px #ffc107, /* Slightly orange glow */
+                 0 0 20px #ffc107;
+    animation: glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 5px #ffeb3b, 0 0 10px #ffeb3b, 0 0 15px #ffc107, 0 0 20px #ffc107;
+    }
+    to {
+        text-shadow: 0 0 10px #ffeb3b, 0 0 20px #ffeb3b, 0 0 30px #ffc107, 0 0 40px #ffc107;
+    }
+}
+
+
+/* Navigation */
+nav#tool-nav {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    justify-content: center;
+    gap: 10px; /* Spacing between buttons */
+}
+
+.nav-button {
+    background-color: #444;
+    color: #e0e0e0;
+    border: 1px solid #666;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nav-button:hover {
+    background-color: #555;
+}
+
+.nav-button.active {
+    background-color: #d42300; /* Active tool color */
+    color: #1a1a1a;
+    font-weight: bold;
+    box-shadow: 0 0 8px #d40700;
+}
+
+/* Main Content Area */
+main#main-content {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 1rem 2rem;
+    background-color: #252525; /* Content background */
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 188, 212, 0.1); /* Subtle glow */
+}
+
+/* Tool Sections */
+.tool-section {
+    border-bottom: 1px solid #444;
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.tool-section:last-child {
+    border-bottom: none;
+}
+
+.tool-section h2 {
+    color: #d40e00; /* Tool title color */
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #444;
+    padding-bottom: 0.5rem;
+}
+
+/* Home Section Specifics */
+#home-tool .tool-descriptions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+    gap: 1rem;
+}
+#home-tool .tool-desc {
+    background-color: #333;
+    padding: 1rem;
+    border-radius: 5px;
+    border-left: 3px solid #d41900;
+}
+#home-tool .tool-desc b {
+     color: #ffeb3b; /* Highlight tool name */
+}
+
+/* Common Form Elements Styling */
+input[type="text"],
+textarea,
+select {
+    width: 95%; /* Responsive width */
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #333;
+    color: #e0e0e0;
+    border: 1px solid #555;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical; /* Allow vertical resize */
+}
+
+button {
+    background-color: #d41900; /* Action button color */
+    color: #1a1a1a;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    margin: 5px; /* Spacing around buttons */
+}
+
+button:hover {
+    background-color: #c11300;
+}
+button:active {
+    transform: scale(0.98);
+}
+button:disabled {
+     background-color: #555;
+     cursor: not-allowed;
+}
+
+/* Output Areas */
+.output-area {
+    background-color: #1f1f1f; /* Slightly different dark */
+    border: 1px solid #444;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 5px;
+    min-height: 100px;
+    white-space: pre-wrap; /* Preserve line breaks from backend */
+    word-wrap: break-word; /* Prevent long words overflowing */
+}
+.output-area b { /* Style bold text from backend */
+    color: #ffeb3b;
+    font-weight: bold;
+}
+
+/* Chat Interfaces (Ada & Scenarist) */
+.chat-history {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #444;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #1f1f1f;
+    border-radius: 5px;
+}
+.chat-history .user-message,
+.chat-history .model-message {
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    border-radius: 15px;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+.chat-history .user-message {
+    background-color: #ff3300; /* User bubble color */
+    color: white;
+    margin-left: auto; /* Align right */
+    border-bottom-right-radius: 3px;
+}
+.chat-history .model-message {
+    background-color: #4CAF50; /* Model bubble color */
+    color: white;
+    margin-right: auto; /* Align left */
+    border-bottom-left-radius: 3px;
+}
+.chat-input-area {
+    display: flex;
+    align-items: center; /* Align items vertically */
+    gap: 10px;
+}
+.chat-input-area textarea {
+    flex-grow: 1; /* Text area takes available space */
+    margin-bottom: 0; /* Remove default margin */
+    height: 40px; /* Adjust height */
+    resize: none; /* Disable textarea resize */
+}
+
+/* Mic/Mute Buttons (Example) */
+#ada-mic-btn, #ada-mute-btn {
+    padding: 8px;
+    font-size: 1.2rem;
+    min-width: 40px; /* Ensure buttons have size */
+}
+#ada-mic-btn.recording { /* Style when recording */
+     background-color: #f44336; /* Red */
+     color: white;
+     box-shadow: 0 0 10px #f44336;
+}
+
+/* Paraphraser Styles Checkboxes */
+.paraphraser-styles label {
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+/* Objectifier Preview */
+#objectifier-preview img {
+    max-width: 100%;
+    max-height: 200px;
+    margin-top: 10px;
+    border: 1px solid #555;
+    border-radius: 4px;
+}
+/* Accessibility helper */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap; /* Added */
+  border: 0;
+}
+
+/* Loading/Thinking Indicator */
+.thinking-indicator {
+    margin-top: 10px;
+    color: #d40000;
+    font-style: italic;
+    text-align: center;
+    /* Add a subtle animation */
+     animation: pulse 1.5s infinite ease-in-out;
+}
+
+
+
+@keyframes pulse {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header {
+        padding: 1rem;
+    }
+    h1 {
+        font-size: 2rem;
+    }
+    main#main-content {
+        margin: 1rem;
+        padding: 1rem;
+    }
+    nav#tool-nav {
+        gap: 5px;
+    }
+    .nav-button {
+        padding: 6px 10px;
+        font-size: 0.9rem;
+    }
+    .chat-input-area {
+        flex-wrap: wrap; /* Allow buttons to wrap below textarea */
+    }
+}
