@@ -77,10 +77,11 @@ h1 {
 
 .glowing-i {
     /* Yellow 'I' on light theme */
-    color: var(--accent-yellow); /* Use the variable */
+    color: #FFC107; /* Standard Yellow/Amber color */
+    /* Or use a brighter yellow: color: #FFEB3B; */
     font-weight: 700;
-    text-shadow: none;
-    animation: none;
+    text-shadow: none; /* Still no shadow for clean look */
+    animation: none;   /* Still no animation */
 }
 
 /* 4. Navigation */
