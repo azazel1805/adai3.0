@@ -76,11 +76,11 @@ h1 {
 }
 
 .glowing-i {
-    /* No glow on light theme, just make it stand out */
-    color: var(--text-medium-gray); /* Distinct color */
+    /* Yellow 'I' on light theme */
+    color: var(--accent-yellow); /* Use the variable */
     font-weight: 700;
     text-shadow: none;
-    animation: none; /* Remove animation */
+    animation: none;
 }
 
 /* 4. Navigation */
