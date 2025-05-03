@@ -1,32 +1,46 @@
-/* --- ADAI Enhanced Dark Futuristic Theme - V2 --- */
+/* --- ADAI Black & White Theme --- */
 
 /* 1. Font Import & Variables */
 @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;700&display=swap'); /* Futuristic font */
 
 :root {
-    --bg-darkest: #101010;       /* Even darker background */
-    --bg-dark: #1a1a1a;          /* Original dark background */
-    --bg-medium: #252525;        /* Original content background */
-    --bg-light: #333333;         /* Original input background */
-    --bg-lighter: #444444;       /* Lighter grey for accents/hovers */
+    /* Grayscale Palette */
+    --bg-black: #000000;         /* Pure Black */
+    --bg-darker: #111111;       /* Very Dark Gray */
+    --bg-dark: #222222;         /* Dark Gray */
+    --bg-medium: #333333;       /* Medium Gray */
+    --bg-light: #555555;        /* Light Gray */
+    --bg-lighter: #CCCCCC;      /* Very Light Gray */
+    --bg-white: #FFFFFF;         /* Pure White */
 
-    --text-primary: #e0e0e0;     /* Light text */
-    --text-secondary: #aaaaaa;   /* Muted text */
+    --text-white: #FFFFFF;       /* Primary White Text */
+    --text-light-gray: #DDDDDD;  /* Light Gray Text */
+    --text-medium-gray: #AAAAAA; /* Medium Gray Text */
+    --text-dark-gray: #888888;   /* Dark Gray Text (for light backgrounds) */
+    --text-black: #000000;       /* Black Text */
 
-    --accent-red: #d41900;       /* Primary Red Accent */
-    --accent-red-darker: #c11300; /* Darker Red for Hover */
-    --accent-red-glow: #ff3300;   /* Brighter Red for Glow */
+    --accent-primary: var(--text-white);      /* Main Accent is White */
+    --accent-secondary: var(--text-light-gray); /* Secondary Accent */
+    --accent-glow: var(--text-white);         /* Glow color is White */
 
-    --accent-yellow: #ffeb3b;     /* Glow Yellow */
-    --accent-orange: #ffc107;     /* Glow Orange */
+    /* Define semantic colors using grayscale */
+    --color-primary: var(--accent-primary);
+    --color-secondary: var(--accent-secondary);
+    --color-border: var(--bg-light);
+    --color-border-hover: var(--bg-lighter);
+    --color-shadow-dark: rgba(0, 0, 0, 0.5);
+    --color-shadow-light: rgba(255, 255, 255, 0.1);
 
-    --accent-green-model: #4CAF50; /* Model chat bubble */
-    --danger-red: #f44336;       /* Recording/Error */
+    --color-user-bubble-bg: var(--bg-dark);
+    --color-user-bubble-text: var(--text-white);
+    --color-model-bubble-bg: var(--bg-lighter);
+    --color-model-bubble-text: var(--text-black);
+    --color-danger-indicator: var(--text-white); /* For Recording/Error indication */
 
-    --font-main: 'Exo 2', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Futuristic font first */
-    --border-radius: 6px;        /* Slightly more pronounced radius */
-    --transition-speed: 0.25s;   /* Standard transition time */
-    --glow-intensity: 10px;      /* Base glow size */
+    --font-main: 'Exo 2', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --border-radius: 6px;
+    --transition-speed: 0.25s;
+    --glow-intensity: 8px; /* Adjust glow size for B&W */
 }
 
 /* 2. Basic Reset & Body Styling */
@@ -37,23 +51,23 @@
 }
 
 body {
-    /* Subtle Noise Texture + Animated Gradient */
-    background-color: var(--bg-darkest); /* Fallback color */
+    /* Subtle Noise Texture + Animated Grayscale Gradient */
+    background-color: var(--bg-black); /* Fallback color */
     background-image:
         /* Noise layer */
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E"),
         /* Gradient layer */
-        linear-gradient(135deg, var(--bg-darkest) 0%, var(--bg-dark) 50%, #202023 100%);
-    background-size: auto, 200% 200%; /* Noise auto size, Gradient size for animation */
-    background-position: 0 0, 50% 50%; /* Initial positions */
-    animation: gradientBG 25s ease infinite; /* Slower animation */
+        linear-gradient(135deg, var(--bg-black) 0%, var(--bg-darker) 50%, var(--bg-dark) 100%);
+    background-size: auto, 200% 200%;
+    background-position: 0 0, 50% 50%;
+    animation: gradientBG 25s ease infinite;
 
-    color: var(--text-primary);
+    color: var(--text-light-gray); /* Default text color */
     font-family: var(--font-main);
-    font-weight: 300; /* Lighter default weight */
+    font-weight: 300;
     line-height: 1.6;
-    min-height: 100vh; /* Ensure gradient covers full height */
-    overflow-x: hidden; /* Prevent horizontal scroll */
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 
 @keyframes gradientBG {
@@ -64,59 +78,46 @@ body {
 
 /* 3. Header & Title */
 header {
-    background-color: rgba(44, 44, 44, 0.8); /* Slightly transparent dark grey */
+    background-color: rgba(20, 20, 20, 0.85); /* Slightly transparent dark gray */
     padding: 1.2rem 2rem;
     text-align: center;
-    border-bottom: 1px solid var(--bg-lighter);
-    position: sticky; /* Keep header on top */
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
     top: 0;
     z-index: 100;
-    backdrop-filter: blur(10px); /* Frosted glass effect */
+    backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    transition: border-color 0.4s ease, box-shadow 0.4s ease; /* Add transition for potential scroll effects */
+    transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
 }
 
-/* Optional: Style header when scrolled (may need JS for reliability) */
-/* body:has(main:not(:target)) header {
-    border-bottom-color: var(--accent-red);
-    box-shadow: 0 2px 10px rgba(212, 25, 0, 0.2);
-} */
-
-
 h1 {
-    color: var(--accent-red);
-    font-size: 2.8rem; /* Increase size */
-    font-weight: 700; /* Bold title */
+    color: var(--color-primary); /* White title */
+    font-size: 2.8rem;
+    font-weight: 700;
     margin-bottom: 0.7rem;
     letter-spacing: 1px;
-    text-shadow: 0 0 5px rgba(212, 25, 0, 0.5); /* Subtle red shadow */
-    cursor: pointer; /* Make it look clickable */
+    text-shadow: 0 0 5px var(--color-shadow-light); /* Subtle white shadow */
+    cursor: pointer;
 }
 
 .glowing-i {
-    color: var(--accent-yellow);
+    color: var(--color-primary); /* White */
     font-weight: 700;
-    /* Enhanced glow animation */
-    text-shadow: 0 0 var(--glow-intensity) var(--accent-yellow),
-                 0 0 calc(var(--glow-intensity) * 2) var(--accent-yellow),
-                 0 0 calc(var(--glow-intensity) * 3) var(--accent-orange),
-                 0 0 calc(var(--glow-intensity) * 4) var(--accent-orange);
-    animation: glow 1.5s ease-in-out infinite alternate;
+    /* White glow animation */
+    text-shadow: 0 0 var(--glow-intensity) var(--accent-glow),
+                 0 0 calc(var(--glow-intensity) * 2) var(--accent-glow);
+    animation: glow-bw 1.5s ease-in-out infinite alternate;
 }
 
-@keyframes glow {
+@keyframes glow-bw { /* Black and White Glow */
     from {
-        text-shadow: 0 0 var(--glow-intensity) var(--accent-yellow),
-                     0 0 calc(var(--glow-intensity) * 1.5) var(--accent-yellow),
-                     0 0 calc(var(--glow-intensity) * 2) var(--accent-orange),
-                     0 0 calc(var(--glow-intensity) * 2.5) var(--accent-orange);
-        opacity: 0.9;
+        text-shadow: 0 0 var(--glow-intensity) var(--accent-glow),
+                     0 0 calc(var(--glow-intensity) * 1.5) var(--accent-glow);
+        opacity: 0.85;
     }
     to {
-        text-shadow: 0 0 calc(var(--glow-intensity) * 1.5) var(--accent-yellow),
-                     0 0 calc(var(--glow-intensity) * 2.5) var(--accent-yellow),
-                     0 0 calc(var(--glow-intensity) * 3.5) var(--accent-orange),
-                     0 0 calc(var(--glow-intensity) * 4.5) var(--accent-orange);
+        text-shadow: 0 0 calc(var(--glow-intensity) * 1.5) var(--accent-glow),
+                     0 0 calc(var(--glow-intensity) * 2.5) var(--accent-glow);
         opacity: 1;
     }
 }
@@ -124,159 +125,141 @@ h1 {
 /* 4. Navigation */
 nav#tool-nav {
     display: flex;
-    /* REMOVE flex-wrap: wrap; */
-    /* Allow horizontal scrolling */
-    overflow-x: auto;
-    /* Prevent vertical scrollbars within the nav */
-    overflow-y: hidden;
-    /* Improve scroll behavior on touch devices */
-    -webkit-overflow-scrolling: touch;
-    /* Add some padding at the ends for better scrolling */
-    padding-left: 1rem;
-    padding-right: 1rem;
-    /* Prevent flex items from shrinking */
-    flex-shrink: 0;
-    /* Hide scrollbar visually (optional, affects usability) */
-    /* scrollbar-width: none; /* Firefox */
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    margin-top: 0.5rem;
 }
 
 .nav-button {
-    background-color: var(--bg-light);
-    color: var(--text-secondary); /* Muted color initially */
-    border: 1px solid var(--bg-lighter);
-    padding: 9px 18px; /* Slightly larger padding */
+    background-color: var(--bg-medium);
+    color: var(--text-medium-gray); /* Muted gray initially */
+    border: 1px solid var(--color-border);
+    padding: 9px 18px;
     cursor: pointer;
     border-radius: var(--border-radius);
-    font-weight: 400; /* Normal weight */
-    transition: all var(--transition-speed) ease; /* Smooth all transitions */
-    position: relative; /* For pseudo-elements */
-    overflow: hidden; /* For potential effects */
-    white-space: nowrap; /* Prevent text wrapping inside button */
-    flex-shrink: 0; /* Prevent button itself from shrinking */
-
+    font-weight: 400;
+    transition: all var(--transition-speed) ease;
+    position: relative;
+    overflow: hidden;
 }
 
-.nav-button::before { /* Add subtle underline effect */
+.nav-button::before { /* Underline effect */
     content: '';
     position: absolute;
     bottom: 0;
     left: 50%;
     width: 0;
     height: 2px;
-    background-color: var(--accent-red);
+    background-color: var(--color-primary); /* White underline */
     transition: all var(--transition-speed) ease;
     transform: translateX(-50%);
 }
 
 .nav-button:hover,
 .nav-button:focus {
-    color: var(--text-primary); /* Brighter text on hover/focus */
-    background-color: var(--bg-lighter);
-    border-color: var(--accent-red-glow);
-    box-shadow: 0 0 12px rgba(255, 51, 0, 0.5); /* Increase glow size */
-    transform: translateY(-3px); /* Increase lift */
-    outline: none; /* Remove default focus outline */
+    color: var(--text-white); /* Brighter text on hover/focus */
+    background-color: var(--bg-light);
+    border-color: var(--color-border-hover);
+    box-shadow: 0 0 8px var(--color-shadow-light); /* Subtle white glow */
+    transform: translateY(-3px);
+    outline: none;
 }
 
 .nav-button:hover::before {
-    width: 70%; /* Expand underline on hover */
+    width: 70%;
 }
 
 .nav-button.active {
-    background-color: var(--accent-red);
-    color: var(--bg-darkest); /* Dark text on active */
-    font-weight: 500; /* Slightly bolder */
-    border-color: var(--accent-red-darker);
-    box-shadow: 0 0 15px var(--accent-red-glow), inset 0 0 8px rgba(0, 0, 0, 0.4); /* More intense glow + inset shadow */
-    transform: translateY(0); /* Reset lift */
+    background-color: var(--color-primary); /* White background */
+    color: var(--text-black); /* Black text on active */
+    font-weight: 500;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 12px var(--color-shadow-light), inset 0 0 8px rgba(0, 0, 0, 0.2); /* White glow + dark inset */
+    transform: translateY(0);
 }
 
 .nav-button.active::before {
-    width: 100%; /* Full underline on active */
-    background-color: var(--accent-yellow); /* Change underline color */
-    height: 3px; /* Thicker underline */
-    box-shadow: 0 0 5px var(--accent-yellow); /* Add glow to underline */
+    width: 100%;
+    background-color: var(--text-black); /* Black underline on active */
+    height: 3px;
+    box-shadow: none; /* No glow on black underline */
 }
 
 /* 5. Main Content Area */
 main#main-content {
-    max-width: 950px; /* Slightly wider */
+    max-width: 950px;
     margin: 2.5rem auto;
-    padding: 1.5rem 2.5rem; /* More padding */
-    background: linear-gradient(180deg, var(--bg-medium) 0%, #2a2a2a 100%); /* Darker gradient */
+    padding: 1.5rem 2.5rem;
+    background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-darker) 100%); /* Grayscale gradient */
     border-radius: var(--border-radius);
-    /* Remove static border, use pseudo-element */
-    position: relative; /* Needed for pseudo-element */
+    position: relative;
     z-index: 1;
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3); /* Darker shadow */
-    background-clip: padding-box; /* Prevents background bleeding under border */
+    box-shadow: 0 5px 25px var(--color-shadow-dark); /* Dark shadow */
+    background-clip: padding-box;
 }
 
-/* Gradient border using pseudo-element */
+/* Grayscale gradient border */
 main#main-content::before {
     content: '';
     position: absolute;
-    inset: -1px; /* Position slightly outside */
-    border-radius: inherit; /* Match parent's border-radius */
-    background: linear-gradient(145deg, var(--accent-red-glow), var(--bg-light), var(--accent-red)); /* Gradient */
-    z-index: -1; /* Place behind the main content */
-    filter: blur(1px); /* Slightly blur the border gradient */
-    transition: filter 0.3s ease, background 0.4s ease; /* Smooth transition */
+    inset: -1px;
+    border-radius: inherit;
+    background: linear-gradient(145deg, var(--bg-lighter), var(--bg-medium), var(--bg-light)); /* Gray gradient */
+    z-index: -1;
+    filter: blur(1px);
+    transition: filter 0.3s ease, background 0.4s ease;
 }
 
 main#main-content:hover::before {
-    filter: blur(3px) brightness(1.2); /* Enhance blur/brightness on hover */
-    background: linear-gradient(145deg, var(--accent-yellow), var(--bg-light), var(--accent-red-glow)); /* Change gradient on hover */
+    filter: blur(3px) brightness(1.5); /* Enhance brightness on hover */
+    background: linear-gradient(145deg, var(--bg-white), var(--bg-medium), var(--bg-lighter)); /* Brighter gradient */
 }
 
 
 /* 6. Tool Sections */
 .tool-section {
-    border-bottom: 1px dashed var(--bg-light); /* Dashed border */
+    border-bottom: 1px dashed var(--bg-medium); /* Dashed border */
     padding-bottom: 2rem;
     margin-bottom: 2rem;
-    /* CSS-only animation (subtle fade-in based on display property change) */
-    /* This might not be as smooth as JS-driven class toggle */
-    /* transition: opacity 0.6s ease-out; */
 }
 .tool-section:last-child {
     border-bottom: none;
 }
-/* .tool-section:not(:active) { /* Not reliable without JS class */
-    /* opacity: 0; */
-/* } */
 
 .tool-section h2 {
-    color: var(--accent-red);
-    margin-bottom: 1.5rem; /* More space below title */
-    border-bottom: 1px solid var(--bg-light);
-    padding-bottom: 0.8rem; /* More space below title */
-    font-weight: 500; /* Slightly bolder */
+    color: var(--text-white); /* White section titles */
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--bg-medium);
+    padding-bottom: 0.8rem;
+    font-weight: 500;
     letter-spacing: 0.5px;
-    text-shadow: 0 0 3px rgba(212, 25, 0, 0.3);
+    text-shadow: 0 0 3px var(--color-shadow-light);
 }
 
 /* 7. Home Section Specifics */
 #home-tool .tool-descriptions {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.5rem; /* Increased gap */
+    gap: 1.5rem;
 }
 #home-tool .tool-desc {
-    background-color: var(--bg-light);
+    background-color: var(--bg-dark); /* Darker description cards */
     padding: 1.2rem;
     border-radius: var(--border-radius);
-    border-left: 4px solid var(--accent-red);
+    border-left: 4px solid var(--bg-light); /* Gray accent border */
     transition: all var(--transition-speed) ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 5px var(--color-shadow-dark);
 }
 #home-tool .tool-desc:hover {
-    transform: translateY(-5px) scale(1.02); /* Lift and scale on hover */
-    box-shadow: 0 6px 15px rgba(212, 25, 0, 0.2); /* Red glow on hover */
-    border-left-color: var(--accent-red-glow);
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 6px 15px var(--color-shadow-dark); /* Darker shadow */
+    border-left-color: var(--color-primary); /* White accent border on hover */
+    background-color: var(--bg-medium);
 }
 #home-tool .tool-desc b {
-     color: var(--accent-yellow);
+     color: var(--text-white); /* White tool name */
      font-weight: 500;
 }
 
@@ -284,36 +267,35 @@ main#main-content:hover::before {
 input[type="text"],
 textarea,
 select {
-    width: 100%; /* Use full width */
-    padding: 12px 15px; /* More padding */
-    margin-bottom: 15px; /* More margin */
-    background-color: var(--bg-light);
-    color: var(--text-primary);
-    border: 1px solid var(--bg-lighter); /* Base border */
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    background-color: var(--bg-darker); /* Very dark input background */
+    color: var(--text-light-gray);
+    border: 1px solid var(--bg-medium); /* Dark border */
     border-radius: var(--border-radius);
     font-size: 1rem;
     font-family: var(--font-main);
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.3); /* Base inset shadow */
+    box-shadow: inset 0 1px 3px var(--color-shadow-dark);
     transition: background-color var(--transition-speed) ease,
                 border-color var(--transition-speed) ease,
-                box-shadow 0.4s ease; /* Transition shadow back */
+                box-shadow 0.4s ease;
 }
 
 input[type="text"]:focus,
 textarea:focus,
 select:focus {
-    background-color: var(--bg-lighter);
-    border-color: var(--bg-lighter); /* Keep border subtle */
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.3); /* Keep inset */
+    background-color: var(--bg-dark);
+    border-color: var(--bg-light); /* Lighter border on focus */
+    box-shadow: inset 0 1px 3px var(--color-shadow-dark);
     outline: none;
-    /* Add animated outer glow */
-    animation: inputFocusGlow 0.8s ease forwards;
+    animation: inputFocusGlow-bw 0.8s ease forwards; /* White glow animation */
 }
 
-@keyframes inputFocusGlow {
-    0% { box-shadow: inset 0 1px 3px rgba(0,0,0,0.3), 0 0 0px rgba(212, 25, 0, 0.0); }
-    50% { box-shadow: inset 0 1px 3px rgba(0,0,0,0.3), 0 0 12px rgba(212, 25, 0, 0.6); }
-    100% { box-shadow: inset 0 1px 3px rgba(0,0,0,0.3), 0 0 8px rgba(212, 25, 0, 0.5); } /* End state */
+@keyframes inputFocusGlow-bw {
+    0% { box-shadow: inset 0 1px 3px var(--color-shadow-dark), 0 0 0px var(--color-shadow-light); }
+    50% { box-shadow: inset 0 1px 3px var(--color-shadow-dark), 0 0 12px var(--color-shadow-light); }
+    100% { box-shadow: inset 0 1px 3px var(--color-shadow-dark), 0 0 8px var(--color-shadow-light); }
 }
 
 textarea {
@@ -322,195 +304,163 @@ textarea {
 }
 
 select {
-    appearance: none; /* Custom select arrow */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23e0e0e0'%3E%3Cpath d='M6 8.825L.175 3 1.175 2 6 6.825 10.825 2 11.825 3z'/%3E%3C/svg%3E");
+    appearance: none;
+    /* White SVG arrow */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23FFFFFF'%3E%3Cpath d='M6 8.825L.175 3 1.175 2 6 6.825 10.825 2 11.825 3z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 15px center;
-    padding-right: 40px; /* Space for arrow */
+    padding-right: 40px;
 }
 
-/* 9. Button Styling */
+/* 9. Button Styling (Action Buttons) */
 button {
-    background: linear-gradient(180deg, var(--accent-red) 0%, var(--accent-red-darker) 100%);
-    background-size: 100% 200%; /* Allow space for gradient shift */
-    background-position: 50% 0%; /* Start at top */
-    color: var(--text-primary); /* White text on buttons */
-    border: none;
-    padding: 12px 22px; /* More padding */
+    /* Grayscale Gradient Button */
+    background: linear-gradient(180deg, var(--bg-lighter) 0%, var(--bg-light) 100%);
+    background-size: 100% 200%;
+    background-position: 50% 0%;
+    color: var(--text-black); /* Black text */
+    border: 1px solid var(--bg-medium); /* Add subtle border */
+    padding: 12px 22px;
     border-radius: var(--border-radius);
     cursor: pointer;
     font-size: 1rem;
-    font-weight: 500; /* Bolder buttons */
+    font-weight: 500;
     font-family: var(--font-main);
     margin: 5px;
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3), inset 0 -2px 0px rgba(0, 0, 0, 0.2); /* 3D effect */
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2); /* Text shadow for depth */
-    position: relative; /* Needed for pseudo-element */
-    overflow: hidden;   /* Keep shimmer inside */
-    transition: background-position var(--transition-speed) ease, /* Animate background pos */
+    box-shadow: 0 3px 5px var(--color-shadow-dark), inset 0 -2px 0px rgba(0, 0, 0, 0.2);
+    text-shadow: none; /* Remove dark text shadow */
+    position: relative;
+    overflow: hidden;
+    transition: background-position var(--transition-speed) ease,
                 transform var(--transition-speed) ease,
-                box-shadow var(--transition-speed) ease;
+                box-shadow var(--transition-speed) ease,
+                border-color var(--transition-speed) ease;
 }
-
-/* Optional Shimmer effect (Uncomment if desired) */
-/* button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 75%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
-    transition: left var(--transition-speed) cubic-bezier(0.23, 1, 0.32, 1);
-    transform: skewX(-25deg);
-}
-button:hover:not(:disabled)::before {
-    left: 125%;
-} */
-
 
 button:hover:not(:disabled) {
-    background-position: 50% 100%; /* Shift gradient to bottom */
-    box-shadow: 0 4px 8px rgba(212, 25, 0, 0.4), inset 0 -2px 0px rgba(0, 0, 0, 0.2); /* Enhance shadow + glow */
-    transform: translateY(-2px); /* Lift effect */
+    background-position: 50% 100%; /* Shift gradient */
+    border-color: var(--bg-lighter);
+    box-shadow: 0 4px 8px var(--color-shadow-dark), inset 0 -2px 0px rgba(0, 0, 0, 0.2), 0 0 10px var(--color-shadow-light); /* Add subtle white glow */
+    transform: translateY(-2px);
 }
 
 button:active:not(:disabled) {
-    transform: translateY(1px); /* Push down effect */
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(0, 0, 0, 0.3); /* Reduced shadow */
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px var(--color-shadow-dark), inset 0 1px 1px rgba(0, 0, 0, 0.3);
 }
 
 button:focus {
-     outline: 2px solid var(--accent-yellow); /* Yellow focus outline */
+     outline: 2px solid var(--color-primary); /* White focus outline */
      outline-offset: 2px;
 }
 
 
 button:disabled {
-     background: var(--bg-light); /* Grey background */
-     color: var(--text-secondary);
+     background: var(--bg-medium); /* Dark gray background */
+     color: var(--text-dark-gray); /* Darker gray text */
      cursor: not-allowed;
-     box-shadow: inset 0 1px 3px rgba(0,0,0,0.3); /* Only inner shadow */
+     box-shadow: inset 0 1px 3px var(--color-shadow-dark);
      text-shadow: none;
      transform: none;
-     background-image: none; /* Remove gradient */
-     background-size: auto;
-     background-position: initial;
+     background-image: none;
+     border-color: var(--bg-dark);
 }
 
 /* Specific Button Styles (Mic, Pronounce) */
 #ada-mic-btn, #dictionary-pronounce-btn {
-    background: var(--bg-lighter); /* Different base background */
-    color: var(--text-primary);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    background: var(--bg-dark); /* Darker base background */
+    color: var(--text-light-gray);
+    box-shadow: 0 2px 4px var(--color-shadow-dark);
+    border: 1px solid var(--bg-medium);
     text-shadow: none;
-    background-image: none; /* No gradient */
+    background-image: none;
 }
 #ada-mic-btn:hover:not(:disabled),
 #dictionary-pronounce-btn:hover:not(:disabled) {
-     background: var(--bg-light);
-     box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+     background: var(--bg-medium);
+     box-shadow: 0 3px 6px var(--color-shadow-dark);
      transform: translateY(-1px);
-     background-position: initial; /* Prevent gradient shift */
-}
-#dictionary-pronounce-btn:hover:not(:disabled) {
-     color: var(--accent-yellow); /* Highlight icon color */
+     background-position: initial;
+     color: var(--text-white);
 }
 
-#ada-mic-btn.recording { /* Style when recording */
-     background: var(--danger-red);
-     color: white;
-     box-shadow: 0 0 15px var(--danger-red);
-     animation: mic-pulse 1s infinite;
+/* Recording state - Use pulsing border/shadow instead of red */
+#ada-mic-btn.recording {
+     background: var(--bg-dark);
+     color: var(--text-white);
+     border-color: var(--color-danger-indicator); /* White border */
+     box-shadow: 0 0 10px var(--color-danger-indicator); /* White shadow */
+     animation: mic-pulse-bw 1s infinite;
 }
-@keyframes mic-pulse {
-    0% { box-shadow: 0 0 5px var(--danger-red); }
-    50% { box-shadow: 0 0 15px var(--danger-red); }
-    100% { box-shadow: 0 0 5px var(--danger-red); }
+@keyframes mic-pulse-bw {
+    0% { box-shadow: 0 0 5px var(--color-danger-indicator); border-color: var(--bg-lighter); }
+    50% { box-shadow: 0 0 15px var(--color-danger-indicator); border-color: var(--color-danger-indicator); }
+    100% { box-shadow: 0 0 5px var(--color-danger-indicator); border-color: var(--bg-lighter); }
 }
 
 
 /* 10. Output Areas */
 .output-area {
-    background-color: var(--bg-dark); /* Darker output */
-    border: 1px solid var(--bg-light);
-    padding: 20px; /* More padding */
+    background-color: var(--bg-darker); /* Darkest output */
+    border: 1px solid var(--bg-medium);
+    padding: 20px;
     margin-top: 20px;
     border-radius: var(--border-radius);
-    min-height: 120px; /* Increased min height */
+    min-height: 120px;
     white-space: pre-wrap;
     word-wrap: break-word;
-    color: var(--text-secondary); /* Slightly muted base text */
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.4); /* Deeper inset shadow */
-    line-height: 1.7; /* Better readability for output */
+    color: var(--text-medium-gray); /* Default output text */
+    box-shadow: inset 0 2px 5px var(--color-shadow-dark);
+    line-height: 1.7;
     font-size: 0.95rem;
-    position: relative; /* Needed for pseudo-element */
-    overflow: hidden; /* Keep scanlines inside */
+    position: relative;
+    overflow: hidden;
 }
 
-/* Scanline effect */
+/* Scanline effect (grayscale) */
 .output-area::after {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
-    background-size: 100% 4px, 5px 100%; /* Adjust line thickness/spacing */
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.15) 50%), linear-gradient(90deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0.005), rgba(255, 255, 255, 0.01));
+    background-size: 100% 4px, 6px 100%; /* Adjust line thickness/spacing */
     z-index: 1;
     pointer-events: none;
-    animation: scanlines 30s linear infinite; /* Slower animation */
-    opacity: 0.6; /* Make scanlines subtler */
+    animation: scanlines 30s linear infinite;
+    opacity: 0.5; /* Adjust opacity */
 }
 
 @keyframes scanlines {
   from { background-position: 0 0, 0 0; }
-  to { background-position: 0 100%, 0 0; } /* Only animate vertical lines */
+  to { background-position: 0 100%, 0 0; }
 }
 
 .output-area b { /* Style bold text from backend */
-    color: var(--accent-yellow);
+    color: var(--text-white); /* White bold text */
     font-weight: 500;
-    text-shadow: 0 0 4px rgba(255, 235, 59, 0.4); /* Enhanced glow on bold */
+    text-shadow: 0 0 4px var(--color-shadow-light); /* Subtle white glow */
 }
-.output-area > *:first-child {
-    margin-top: 0;
-}
-.output-area > *:last-child {
-    margin-bottom: 0;
-}
+.output-area > *:first-child { margin-top: 0; }
+.output-area > *:last-child { margin-bottom: 0; }
 
 
 /* 11. Chat Interfaces (Ada & Scenarist) */
 .chat-history {
     max-height: 450px;
     overflow-y: auto;
-    border: 1px solid var(--bg-light);
+    border: 1px solid var(--bg-medium);
     padding: 15px;
     margin-bottom: 15px;
-    background-color: var(--bg-dark); /* Match output area */
+    background-color: var(--bg-darker); /* Darkest background */
     border-radius: var(--border-radius);
-    box-shadow: inset 0 3px 8px rgba(0,0,0,0.5); /* Stronger inset shadow */
-    scrollbar-width: thin; /* Firefox */
-    scrollbar-color: var(--bg-lighter) var(--bg-dark); /* Firefox */
+    box-shadow: inset 0 3px 8px var(--color-shadow-dark);
+    scrollbar-width: thin;
+    scrollbar-color: var(--bg-medium) var(--bg-darker);
 }
-/* Webkit scrollbar styling */
-.chat-history::-webkit-scrollbar {
-    width: 8px;
-}
-.chat-history::-webkit-scrollbar-track {
-    background: var(--bg-dark);
-    border-radius: 4px;
-}
-.chat-history::-webkit-scrollbar-thumb {
-    background-color: var(--bg-lighter);
-    border-radius: 4px;
-    border: 2px solid var(--bg-dark);
-}
-.chat-history::-webkit-scrollbar-thumb:hover {
-    background-color: var(--accent-red);
-}
+.chat-history::-webkit-scrollbar { width: 8px; }
+.chat-history::-webkit-scrollbar-track { background: var(--bg-darker); border-radius: 4px; }
+.chat-history::-webkit-scrollbar-thumb { background-color: var(--bg-medium); border-radius: 4px; border: 2px solid var(--bg-darker); }
+.chat-history::-webkit-scrollbar-thumb:hover { background-color: var(--bg-light); }
 
 
 .chat-history .user-message,
@@ -518,59 +468,50 @@ button:disabled {
 .chat-history .system-message {
     padding: 10px 15px;
     margin-bottom: 10px;
-    border-radius: 18px; /* More rounded */
+    border-radius: 18px;
     max-width: 85%;
     word-wrap: break-word;
     line-height: 1.5;
     position: relative;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    /* Subtle pattern */
-    background-size: 30px 30px;
-    background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.015) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.015) 75%, rgba(255, 255, 255, 0.015)),
-                      linear-gradient(-45deg, rgba(255, 255, 255, 0.015) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.015) 75%, rgba(255, 255, 255, 0.015));
-    /* Entry animation (CSS only - triggers on load/redraw) */
+    box-shadow: 0 2px 4px var(--color-shadow-dark);
+    background-size: 30px 30px; /* Pattern size */
+    /* Subtle diagonal pattern using grayscale */
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.01) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.01) 75%, rgba(255, 255, 255, 0.01)),
+                      linear-gradient(-45deg, rgba(255, 255, 255, 0.01) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.01) 75%, rgba(255, 255, 255, 0.01));
+    /* Entry animation */
     opacity: 0;
     transform: translateY(10px);
     animation: chatBubbleEntry 0.4s ease-out forwards;
 }
 
-
 .chat-history .user-message {
-    /* background: linear-gradient(135deg, var(--accent-red-glow) 0%, var(--accent-red) 100%); */
-    background-color: var(--accent-red); /* Base color for pattern */
-    color: white;
+    background-color: var(--color-user-bubble-bg); /* Dark Gray */
+    color: var(--color-user-bubble-text); /* White */
     margin-left: auto;
     border-bottom-right-radius: 5px;
-    animation-delay: 0.1s; /* Delay user bubble slightly */
+    animation-delay: 0.1s;
 }
 
 .chat-history .model-message {
-    /* background: linear-gradient(135deg, var(--accent-green-model) 0%, #3a8a40 100%); */
-    background-color: var(--accent-green-model); /* Base color for pattern */
-    color: white;
+    background-color: var(--color-model-bubble-bg); /* Light Gray */
+    color: var(--color-model-bubble-text); /* Black */
     margin-right: auto;
     border-bottom-left-radius: 5px;
 }
 
-/* Keyframes for chat bubble entry */
-@keyframes chatBubbleEntry {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+@keyframes chatBubbleEntry { to { opacity: 1; transform: translateY(0); } }
 
 .chat-history .system-message {
-     background: var(--bg-light);
-     background-image: none; /* No pattern on system message */
-     color: var(--text-secondary);
+     background: var(--bg-dark);
+     background-image: none;
+     color: var(--text-medium-gray);
      font-style: italic;
      text-align: center;
      max-width: 100%;
      border-radius: var(--border-radius);
      box-shadow: none;
      font-size: 0.9em;
-     animation: none; /* No entry animation */
+     animation: none;
      opacity: 1;
      transform: none;
 }
@@ -582,261 +523,75 @@ button:disabled {
     gap: 10px;
 }
 .chat-input-area textarea {
-    flex-grow: 1;
-    margin-bottom: 0;
-    height: auto;
-    min-height: 45px;
-    resize: none;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    line-height: 1.4;
+    flex-grow: 1; margin-bottom: 0; height: auto; min-height: 45px; resize: none; padding-top: 12px; padding-bottom: 12px; line-height: 1.4;
 }
-.chat-input-area button {
-     flex-shrink: 0;
-     height: auto;
-     align-self: stretch;
-}
+.chat-input-area button { flex-shrink: 0; height: auto; align-self: stretch; }
 
 /* 12. Paraphraser Styles Checkboxes */
-.paraphraser-styles {
-    margin-bottom: 15px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-}
-.paraphraser-styles label {
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    color: var(--text-secondary);
-    transition: color var(--transition-speed) ease;
-}
-.paraphraser-styles input[type="checkbox"] {
-     appearance: none;
-     width: 16px;
-     height: 16px;
-     border: 1px solid var(--bg-lighter);
-     border-radius: 3px;
-     background-color: var(--bg-light);
-     cursor: pointer;
-     position: relative;
-     transition: all var(--transition-speed) ease;
-     box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
-}
-.paraphraser-styles input[type="checkbox"]::before {
-     content: '';
-     position: absolute;
-     top: 2px;
-     left: 5px;
-     width: 4px;
-     height: 8px;
-     border: solid var(--accent-yellow);
-     border-width: 0 2px 2px 0;
-     transform: rotate(45deg) scale(0);
-     transition: transform var(--transition-speed) ease;
-}
-.paraphraser-styles input[type="checkbox"]:checked {
-    background-color: var(--accent-red);
-    border-color: var(--accent-red-darker);
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.3), 0 0 5px var(--accent-red-glow); /* Add glow when checked */
-}
-.paraphraser-styles input[type="checkbox"]:checked::before {
-    transform: rotate(45deg) scale(1);
-}
-.paraphraser-styles label:hover {
-    color: var(--text-primary);
-}
-.paraphraser-styles label:hover input[type="checkbox"] {
-    border-color: var(--accent-red);
-}
+.paraphraser-styles { margin-bottom: 15px; display: flex; flex-wrap: wrap; gap: 15px; }
+.paraphraser-styles label { cursor: pointer; display: inline-flex; align-items: center; gap: 5px; color: var(--text-medium-gray); transition: color var(--transition-speed) ease; }
+.paraphraser-styles input[type="checkbox"] { appearance: none; width: 16px; height: 16px; border: 1px solid var(--bg-medium); border-radius: 3px; background-color: var(--bg-dark); cursor: pointer; position: relative; transition: all var(--transition-speed) ease; box-shadow: inset 0 1px 2px var(--color-shadow-dark); }
+.paraphraser-styles input[type="checkbox"]::before { content: ''; position: absolute; top: 2px; left: 5px; width: 4px; height: 8px; border: solid var(--text-white); border-width: 0 2px 2px 0; transform: rotate(45deg) scale(0); transition: transform var(--transition-speed) ease; }
+.paraphraser-styles input[type="checkbox"]:checked { background-color: var(--bg-light); border-color: var(--bg-lighter); box-shadow: inset 0 1px 2px var(--color-shadow-dark), 0 0 5px var(--color-shadow-light); }
+.paraphraser-styles input[type="checkbox"]:checked::before { transform: rotate(45deg) scale(1); }
+.paraphraser-styles label:hover { color: var(--text-white); }
+.paraphraser-styles label:hover input[type="checkbox"] { border-color: var(--bg-lighter); }
 
 
 /* 13. Objectifier Preview / Options / File Label */
-.objectifier-options {
-    margin-bottom: 15px;
-    display: flex;
-    gap: 10px;
-}
+.objectifier-options { margin-bottom: 15px; display: flex; gap: 10px; }
+.option-btn { flex-grow: 1; background-color: var(--bg-medium); color: var(--text-medium-gray); border: 1px solid var(--color-border); padding: 9px 15px; cursor: pointer; border-radius: var(--border-radius); font-weight: 400; transition: all var(--transition-speed) ease; }
+.option-btn:hover { background-color: var(--bg-light); color: var(--text-white); }
+.option-btn.active { background-color: var(--color-primary); color: var(--text-black); border-color: var(--color-primary); font-weight: 500; }
+.file-label { display: inline-block; padding: 10px 18px; background: var(--bg-dark); color: var(--text-light-gray); border-radius: var(--border-radius); cursor: pointer; transition: all var(--transition-speed) ease; margin-bottom: 10px; box-shadow: 0 2px 4px var(--color-shadow-dark); border: 1px solid var(--bg-medium); }
+.file-label:hover { background: var(--bg-medium); box-shadow: 0 3px 6px var(--color-shadow-dark); transform: translateY(-1px); }
+.file-label input[type="file"] { display: none; }
+#objectifier-camera-area { display: flex; flex-direction: column; align-items: center; margin-bottom: 15px; }
+.camera-controls { display: flex; gap: 10px; margin-top: 10px; }
+.cancel-btn { background: var(--bg-dark); color: var(--text-medium-gray); border: 1px solid var(--bg-medium); }
+.cancel-btn:hover { background: var(--bg-medium); color: var(--text-light-gray); }
+.image-preview-area { margin-top: 15px; text-align: center; min-height: 50px; }
+.image-preview-area img { max-width: 100%; max-height: 250px; border: 2px solid var(--bg-medium); border-radius: var(--border-radius); background-color: var(--bg-darker); padding: 5px; box-shadow: 0 3px 8px var(--color-shadow-dark); }
+#objectifier-video-feed { transform: scaleX(-1); -webkit-transform: scaleX(-1); width: 100%; max-width: 500px; border-radius: 5px; margin-bottom: 10px; border: 1px solid var(--bg-medium); background-color: var(--bg-black); /* Add background for video area */ }
 
-.option-btn {
-    flex-grow: 1;
-    background-color: var(--bg-light);
-    color: var(--text-secondary);
-    border: 1px solid var(--bg-lighter);
-    padding: 9px 15px;
-    cursor: pointer;
-    border-radius: var(--border-radius);
-    font-weight: 400;
-    transition: all var(--transition-speed) ease;
-}
-.option-btn:hover {
-    background-color: var(--bg-lighter);
-    color: var(--text-primary);
-}
-.option-btn.active {
-    background-color: var(--accent-red);
-    color: var(--text-primary);
-    border-color: var(--accent-red-darker);
-    font-weight: 500;
-}
-
-.file-label {
-    display: inline-block;
-    padding: 10px 18px;
-    background: var(--bg-lighter);
-    color: var(--text-primary);
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    transition: all var(--transition-speed) ease;
-    margin-bottom: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-.file-label:hover {
-    background: var(--bg-light);
-    box-shadow: 0 3px 6px rgba(0,0,0,0.3);
-    transform: translateY(-1px);
-}
-.file-label input[type="file"] {
-    display: none;
-}
-
-#objectifier-camera-area {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-.camera-controls {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.cancel-btn {
-    background: var(--bg-lighter);
-    color: var(--text-secondary);
-}
-.cancel-btn:hover {
-    background: var(--bg-light);
-     color: var(--text-primary);
-}
-
-.image-preview-area {
-    margin-top: 15px;
-    text-align: center;
-    min-height: 50px;
-}
-.image-preview-area img {
-    max-width: 100%;
-    max-height: 250px;
-    border: 2px solid var(--bg-lighter);
-    border-radius: var(--border-radius);
-    background-color: var(--bg-dark);
-    padding: 5px;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.3);
-}
-
-#objectifier-video-feed {
-    transform: scaleX(-1);
-    -webkit-transform: scaleX(-1);
-    width: 100%;
-    max-width: 500px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    border: 1px solid var(--bg-light);
-}
-
-/* 14. Loading/Thinking Indicator */
-/* Uses spinner defined previously, needs JS to toggle 'active' class */
+/* 14. Loading/Thinking Indicator (CSS Only Animation) */
 .thinking-indicator {
-    /* display: flex; /* Keep display control in JS/HTML */
-    /* justify-content: center; */
-    /* align-items: center; */
-    /* gap: 8px; */
     margin-top: 15px;
     min-height: 2em; /* Reserve space */
-    color: var(--accent-red-glow);
+    color: var(--text-light-gray); /* Light Gray text */
     font-style: italic;
     text-align: center;
     /* Apply animation directly when element is displayed */
-    animation: fadeInPulse 1.5s infinite ease-in-out;
+    animation: fadeInPulse-bw 1.5s infinite ease-in-out;
     /* Ensure it's visible when display is not 'none' */
-    opacity: 1; /* Override opacity: 0 from previous attempts */
+    opacity: 1;
 }
-
 /* Keyframes for the pulse/fade animation */
-@keyframes fadeInPulse {
+@keyframes fadeInPulse-bw {
     0%, 100% { opacity: 0.6; transform: scale(1); } /* Start slightly faded */
     50% { opacity: 1; transform: scale(1.03); } /* Fully opaque and slightly larger */
 }
 
 /* 15. Accessibility helper */
-.visually-hidden {
-  position: absolute !important; /* Ensure override */
-  height: 1px; width: 1px;
-  overflow: hidden;
-  clip: rect(1px, 1px, 1px, 1px);
-  white-space: nowrap; /* Prevent line breaks */
-  border: 0;
-}
-
+.visually-hidden { position: absolute !important; height: 1px; width: 1px; overflow: hidden; clip: rect(1px, 1px, 1px, 1px); white-space: nowrap; border: 0; }
 
 /* 16. Responsive Design */
 @media (max-width: 768px) {
-    header {
-        padding: 1rem;
-    }
-    h1 {
-        font-size: 2.2rem; /* Adjust title size */
-    }
-    main#main-content {
-        margin: 1.5rem 1rem; /* Adjust margins */
-        padding: 1rem 1.5rem; /* Adjust padding */
-    }
-    nav#tool-nav {
-        gap: 8px; /* Reduce gap */
-    }
-    .nav-button {
-        padding: 7px 12px; /* Adjust padding */
-        font-size: 0.9rem;
-    }
-    .chat-input-area {
-        flex-wrap: wrap; /* Allow buttons to wrap */
-    }
-    .chat-input-area textarea {
-        min-height: 40px; /* Adjust min height */
-    }
-    .tool-section h2 {
-        font-size: 1.3rem; /* Adjust section title size */
-    }
-    #home-tool .tool-descriptions {
-        grid-template-columns: 1fr; /* Stack descriptions on small screens */
-    }
-     /* Adjust main content border for smaller screens */
-     main#main-content::before {
-        inset: -1px; /* Ensure it covers border area */
-    }
+    header { padding: 1rem; }
+    h1 { font-size: 2.2rem; }
+    main#main-content { margin: 1.5rem 1rem; padding: 1rem 1.5rem; }
+    nav#tool-nav { gap: 8px; }
+    .nav-button { padding: 7px 12px; font-size: 0.9rem; }
+    .chat-input-area { flex-wrap: wrap; }
+    .chat-input-area textarea { min-height: 40px; }
+    .tool-section h2 { font-size: 1.3rem; }
+    #home-tool .tool-descriptions { grid-template-columns: 1fr; }
+    main#main-content::before { inset: -1px; }
 }
 
 /* 17. Custom Scrollbar (Whole page) */
-body::-webkit-scrollbar {
-    width: 10px;
-}
-body::-webkit-scrollbar-track {
-    background: var(--bg-darkest);
-}
-body::-webkit-scrollbar-thumb {
-    background-color: var(--bg-light);
-    border-radius: 5px;
-    border: 2px solid var(--bg-darkest);
-}
-body::-webkit-scrollbar-thumb:hover {
-    background-color: var(--accent-red);
-}
-/* Firefox scrollbar */
-body {
-    scrollbar-width: thin;
-    scrollbar-color: var(--bg-light) var(--bg-darkest);
-}
+body::-webkit-scrollbar { width: 10px; }
+body::-webkit-scrollbar-track { background: var(--bg-black); }
+body::-webkit-scrollbar-thumb { background-color: var(--bg-dark); border-radius: 5px; border: 2px solid var(--bg-black); }
+body::-webkit-scrollbar-thumb:hover { background-color: var(--bg-medium); }
+body { scrollbar-width: thin; scrollbar-color: var(--bg-dark) var(--bg-black); }
