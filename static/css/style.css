@@ -1,46 +1,39 @@
-/* --- ADAI Black & White Theme --- */
+/* --- ADAI Simple Light (White & Black) Theme --- */
 
 /* 1. Font Import & Variables */
-@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;700&display=swap'); /* Futuristic font */
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;700&display=swap');
 
 :root {
-    /* Grayscale Palette */
-    --bg-black: #000000;         /* Pure Black */
-    --bg-darker: #111111;       /* Very Dark Gray */
-    --bg-dark: #222222;         /* Dark Gray */
-    --bg-medium: #333333;       /* Medium Gray */
-    --bg-light: #555555;        /* Light Gray */
-    --bg-lighter: #CCCCCC;      /* Very Light Gray */
+    /* Light Grayscale Palette */
     --bg-white: #FFFFFF;         /* Pure White */
+    --bg-off-white: #f7f7f7;     /* Slightly Off-White */
+    --bg-light-gray: #eeeeee;   /* Light Gray */
+    --bg-medium-gray: #dddddd;  /* Medium Gray */
+    --bg-dark-gray: #bbbbbb;    /* Darker Gray (for borders/hovers) */
 
-    --text-white: #FFFFFF;       /* Primary White Text */
-    --text-light-gray: #DDDDDD;  /* Light Gray Text */
-    --text-medium-gray: #AAAAAA; /* Medium Gray Text */
-    --text-dark-gray: #888888;   /* Dark Gray Text (for light backgrounds) */
-    --text-black: #000000;       /* Black Text */
+    --text-black: #000000;       /* Pure Black */
+    --text-dark-gray: #333333;   /* Dark Gray Text */
+    --text-medium-gray: #666666; /* Medium Gray Text */
+    --text-light-gray: #999999;  /* Light Gray Text (for subtle info) */
+    --text-white: #FFFFFF;       /* White Text (for dark elements) */
 
-    --accent-primary: var(--text-white);      /* Main Accent is White */
-    --accent-secondary: var(--text-light-gray); /* Secondary Accent */
-    --accent-glow: var(--text-white);         /* Glow color is White */
+    /* Define semantic colors using light grayscale */
+    --color-primary: var(--text-black);         /* Main Text/Accent is Black */
+    --color-secondary: var(--text-dark-gray);   /* Secondary Text */
+    --color-border: var(--bg-medium-gray);      /* Borders */
+    --color-border-hover: var(--bg-dark-gray);    /* Hovered Borders */
+    --color-shadow: rgba(0, 0, 0, 0.1);         /* Subtle Dark Shadow */
+    --color-glow: rgba(0, 0, 0, 0.1);           /* Subtle Dark "Glow" (Shadow) */
 
-    /* Define semantic colors using grayscale */
-    --color-primary: var(--accent-primary);
-    --color-secondary: var(--accent-secondary);
-    --color-border: var(--bg-light);
-    --color-border-hover: var(--bg-lighter);
-    --color-shadow-dark: rgba(0, 0, 0, 0.5);
-    --color-shadow-light: rgba(255, 255, 255, 0.1);
-
-    --color-user-bubble-bg: var(--bg-dark);
-    --color-user-bubble-text: var(--text-white);
-    --color-model-bubble-bg: var(--bg-lighter);
+    --color-user-bubble-bg: var(--bg-light-gray);
+    --color-user-bubble-text: var(--text-black);
+    --color-model-bubble-bg: var(--bg-medium-gray);
     --color-model-bubble-text: var(--text-black);
-    --color-danger-indicator: var(--text-white); /* For Recording/Error indication */
+    --color-danger-indicator: var(--text-black); /* For Recording/Error indication */
 
-    --font-main: 'Exo 2', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    --border-radius: 6px;
-    --transition-speed: 0.25s;
-    --glow-intensity: 8px; /* Adjust glow size for B&W */
+    --font-main: 'Exo+2', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --border-radius: 4px;        /* Slightly sharper radius */
+    --transition-speed: 0.2s;   /* Faster transitions */
 }
 
 /* 2. Basic Reset & Body Styling */
@@ -51,75 +44,43 @@
 }
 
 body {
-    /* Subtle Noise Texture + Animated Grayscale Gradient */
-    background-color: var(--bg-black); /* Fallback color */
-    background-image:
-        /* Noise layer */
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E"),
-        /* Gradient layer */
-        linear-gradient(135deg, var(--bg-black) 0%, var(--bg-darker) 50%, var(--bg-dark) 100%);
-    background-size: auto, 200% 200%;
-    background-position: 0 0, 50% 50%;
-    animation: gradientBG 25s ease infinite;
-
-    color: var(--text-light-gray); /* Default text color */
+    background-color: var(--bg-white); /* Simple White Background */
+    color: var(--text-dark-gray);      /* Default text color */
     font-family: var(--font-main);
-    font-weight: 300;
+    font-weight: 400; /* Regular weight */
     line-height: 1.6;
     min-height: 100vh;
     overflow-x: hidden;
 }
 
-@keyframes gradientBG {
-    0% { background-position: 0 0, 0% 50%; }
-    50% { background-position: 0 0, 100% 50%; }
-    100% { background-position: 0 0, 0% 50%; }
-}
-
 /* 3. Header & Title */
 header {
-    background-color: rgba(20, 20, 20, 0.85); /* Slightly transparent dark gray */
-    padding: 1.2rem 2rem;
+    background-color: var(--bg-off-white); /* Off-white header */
+    padding: 1rem 2rem;
     text-align: center;
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border); /* Subtle border */
     position: sticky;
     top: 0;
     z-index: 100;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    /* Remove backdrop filter for simplicity */
 }
 
 h1 {
-    color: var(--color-primary); /* White title */
-    font-size: 2.8rem;
+    color: var(--color-primary); /* Black title */
+    font-size: 2.5rem; /* Adjust size */
     font-weight: 700;
-    margin-bottom: 0.7rem;
-    letter-spacing: 1px;
-    text-shadow: 0 0 5px var(--color-shadow-light); /* Subtle white shadow */
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.5px;
+    text-shadow: none; /* Remove shadow */
     cursor: pointer;
 }
 
 .glowing-i {
-    color: var(--color-primary); /* White */
+    /* No glow on light theme, just make it stand out */
+    color: var(--text-medium-gray); /* Distinct color */
     font-weight: 700;
-    /* White glow animation */
-    text-shadow: 0 0 var(--glow-intensity) var(--accent-glow),
-                 0 0 calc(var(--glow-intensity) * 2) var(--accent-glow);
-    animation: glow-bw 1.5s ease-in-out infinite alternate;
-}
-
-@keyframes glow-bw { /* Black and White Glow */
-    from {
-        text-shadow: 0 0 var(--glow-intensity) var(--accent-glow),
-                     0 0 calc(var(--glow-intensity) * 1.5) var(--accent-glow);
-        opacity: 0.85;
-    }
-    to {
-        text-shadow: 0 0 calc(var(--glow-intensity) * 1.5) var(--accent-glow),
-                     0 0 calc(var(--glow-intensity) * 2.5) var(--accent-glow);
-        opacity: 1;
-    }
+    text-shadow: none;
+    animation: none; /* Remove animation */
 }
 
 /* 4. Navigation */
@@ -127,22 +88,21 @@ nav#tool-nav {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 12px;
+    gap: 10px;
     width: 100%;
     margin-top: 0.5rem;
 }
 
 .nav-button {
-    background-color: var(--bg-medium);
-    color: var(--text-medium-gray); /* Muted gray initially */
-    border: 1px solid var(--color-border);
-    padding: 9px 18px;
+    background-color: transparent; /* Transparent background */
+    color: var(--text-medium-gray);
+    border: 1px solid transparent; /* No border initially */
+    padding: 8px 15px;
     cursor: pointer;
     border-radius: var(--border-radius);
     font-weight: 400;
     transition: all var(--transition-speed) ease;
     position: relative;
-    overflow: hidden;
 }
 
 .nav-button::before { /* Underline effect */
@@ -152,18 +112,18 @@ nav#tool-nav {
     left: 50%;
     width: 0;
     height: 2px;
-    background-color: var(--color-primary); /* White underline */
+    background-color: var(--color-primary); /* Black underline */
     transition: all var(--transition-speed) ease;
     transform: translateX(-50%);
 }
 
 .nav-button:hover,
 .nav-button:focus {
-    color: var(--text-white); /* Brighter text on hover/focus */
-    background-color: var(--bg-light);
-    border-color: var(--color-border-hover);
-    box-shadow: 0 0 8px var(--color-shadow-light); /* Subtle white glow */
-    transform: translateY(-3px);
+    color: var(--text-black); /* Black text on hover/focus */
+    background-color: var(--bg-light-gray); /* Light gray background */
+    border-color: transparent;
+    box-shadow: none; /* No shadow */
+    transform: none; /* No lift */
     outline: none;
 }
 
@@ -172,94 +132,83 @@ nav#tool-nav {
 }
 
 .nav-button.active {
-    background-color: var(--color-primary); /* White background */
-    color: var(--text-black); /* Black text on active */
+    background-color: var(--color-primary); /* Black background */
+    color: var(--text-white); /* White text on active */
     font-weight: 500;
     border-color: var(--color-primary);
-    box-shadow: 0 0 12px var(--color-shadow-light), inset 0 0 8px rgba(0, 0, 0, 0.2); /* White glow + dark inset */
-    transform: translateY(0);
+    box-shadow: none;
+    transform: none;
 }
 
 .nav-button.active::before {
     width: 100%;
-    background-color: var(--text-black); /* Black underline on active */
-    height: 3px;
-    box-shadow: none; /* No glow on black underline */
+    background-color: var(--text-white); /* White underline on active */
+    height: 2px;
+    box-shadow: none;
 }
 
 /* 5. Main Content Area */
 main#main-content {
-    max-width: 950px;
-    margin: 2.5rem auto;
-    padding: 1.5rem 2.5rem;
-    background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-darker) 100%); /* Grayscale gradient */
+    max-width: 900px; /* Standard width */
+    margin: 2rem auto;
+    padding: 1.5rem 2rem;
+    background-color: var(--bg-white); /* White content area */
     border-radius: var(--border-radius);
-    position: relative;
-    z-index: 1;
-    box-shadow: 0 5px 25px var(--color-shadow-dark); /* Dark shadow */
-    background-clip: padding-box;
+    border: 1px solid var(--color-border); /* Subtle border */
+    box-shadow: 0 3px 10px var(--color-shadow); /* Subtle shadow */
+    /* Remove gradient border pseudo-elements */
+    position: static; /* Reset position */
+    z-index: auto;
+    background-clip: initial;
 }
 
-/* Grayscale gradient border */
-main#main-content::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    background: linear-gradient(145deg, var(--bg-lighter), var(--bg-medium), var(--bg-light)); /* Gray gradient */
-    z-index: -1;
-    filter: blur(1px);
-    transition: filter 0.3s ease, background 0.4s ease;
-}
-
-main#main-content:hover::before {
-    filter: blur(3px) brightness(1.5); /* Enhance brightness on hover */
-    background: linear-gradient(145deg, var(--bg-white), var(--bg-medium), var(--bg-lighter)); /* Brighter gradient */
-}
+/* Remove pseudo-element border styles */
+/* main#main-content::before { display: none; } */
 
 
 /* 6. Tool Sections */
 .tool-section {
-    border-bottom: 1px dashed var(--bg-medium); /* Dashed border */
-    padding-bottom: 2rem;
-    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--bg-light-gray); /* Lighter border */
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 .tool-section:last-child {
     border-bottom: none;
 }
 
 .tool-section h2 {
-    color: var(--text-white); /* White section titles */
-    margin-bottom: 1.5rem;
-    border-bottom: 1px solid var(--bg-medium);
-    padding-bottom: 0.8rem;
+    color: var(--text-black); /* Black section titles */
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--bg-light-gray);
+    padding-bottom: 0.5rem;
     font-weight: 500;
-    letter-spacing: 0.5px;
-    text-shadow: 0 0 3px var(--color-shadow-light);
+    letter-spacing: 0;
+    text-shadow: none;
 }
 
 /* 7. Home Section Specifics */
 #home-tool .tool-descriptions {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
 }
 #home-tool .tool-desc {
-    background-color: var(--bg-dark); /* Darker description cards */
-    padding: 1.2rem;
+    background-color: var(--bg-off-white); /* Off-white cards */
+    padding: 1rem;
     border-radius: var(--border-radius);
-    border-left: 4px solid var(--bg-light); /* Gray accent border */
+    border: 1px solid var(--color-border); /* Add border */
+    border-left: 3px solid var(--bg-medium-gray); /* Gray accent */
     transition: all var(--transition-speed) ease;
-    box-shadow: 0 2px 5px var(--color-shadow-dark);
+    box-shadow: none;
 }
 #home-tool .tool-desc:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 6px 15px var(--color-shadow-dark); /* Darker shadow */
-    border-left-color: var(--color-primary); /* White accent border on hover */
-    background-color: var(--bg-medium);
+    transform: none; /* No lift */
+    box-shadow: 0 4px 12px var(--color-shadow); /* Subtle shadow on hover */
+    border-left-color: var(--color-primary); /* Black accent on hover */
+    background-color: var(--bg-white);
 }
 #home-tool .tool-desc b {
-     color: var(--text-white); /* White tool name */
+     color: var(--text-black); /* Black tool name */
      font-weight: 500;
 }
 
@@ -268,177 +217,148 @@ input[type="text"],
 textarea,
 select {
     width: 100%;
-    padding: 12px 15px;
-    margin-bottom: 15px;
-    background-color: var(--bg-darker); /* Very dark input background */
-    color: var(--text-light-gray);
-    border: 1px solid var(--bg-medium); /* Dark border */
+    padding: 10px 12px; /* Adjust padding */
+    margin-bottom: 10px;
+    background-color: var(--bg-white); /* White input background */
+    color: var(--text-dark-gray);
+    border: 1px solid var(--color-border); /* Standard border */
     border-radius: var(--border-radius);
     font-size: 1rem;
     font-family: var(--font-main);
-    box-shadow: inset 0 1px 3px var(--color-shadow-dark);
-    transition: background-color var(--transition-speed) ease,
-                border-color var(--transition-speed) ease,
-                box-shadow 0.4s ease;
+    box-shadow: none; /* Remove inset shadow */
+    transition: border-color var(--transition-speed) ease,
+                box-shadow var(--transition-speed) ease;
 }
 
 input[type="text"]:focus,
 textarea:focus,
 select:focus {
-    background-color: var(--bg-dark);
-    border-color: var(--bg-light); /* Lighter border on focus */
-    box-shadow: inset 0 1px 3px var(--color-shadow-dark);
+    background-color: var(--bg-white);
+    border-color: var(--color-primary); /* Black border on focus */
+    box-shadow: 0 0 0 2px var(--color-glow); /* Subtle dark "glow" */
     outline: none;
-    animation: inputFocusGlow-bw 0.8s ease forwards; /* White glow animation */
-}
-
-@keyframes inputFocusGlow-bw {
-    0% { box-shadow: inset 0 1px 3px var(--color-shadow-dark), 0 0 0px var(--color-shadow-light); }
-    50% { box-shadow: inset 0 1px 3px var(--color-shadow-dark), 0 0 12px var(--color-shadow-light); }
-    100% { box-shadow: inset 0 1px 3px var(--color-shadow-dark), 0 0 8px var(--color-shadow-light); }
+    animation: none; /* Remove focus animation */
 }
 
 textarea {
-    min-height: 120px;
+    min-height: 100px;
     resize: vertical;
 }
 
 select {
     appearance: none;
-    /* White SVG arrow */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23FFFFFF'%3E%3Cpath d='M6 8.825L.175 3 1.175 2 6 6.825 10.825 2 11.825 3z'/%3E%3C/svg%3E");
+    /* Black SVG arrow */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23000000'%3E%3Cpath d='M6 8.825L.175 3 1.175 2 6 6.825 10.825 2 11.825 3z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
-    background-position: right 15px center;
-    padding-right: 40px;
+    background-position: right 12px center;
+    padding-right: 35px;
 }
 
 /* 9. Button Styling (Action Buttons) */
 button {
-    /* Grayscale Gradient Button */
-    background: linear-gradient(180deg, var(--bg-lighter) 0%, var(--bg-light) 100%);
-    background-size: 100% 200%;
-    background-position: 50% 0%;
+    background-color: var(--bg-light-gray); /* Light gray background */
+    background-image: none; /* Remove gradient */
     color: var(--text-black); /* Black text */
-    border: 1px solid var(--bg-medium); /* Add subtle border */
-    padding: 12px 22px;
+    border: 1px solid var(--bg-medium-gray);
+    padding: 10px 18px; /* Adjust padding */
     border-radius: var(--border-radius);
     cursor: pointer;
     font-size: 1rem;
     font-weight: 500;
     font-family: var(--font-main);
     margin: 5px;
-    box-shadow: 0 3px 5px var(--color-shadow-dark), inset 0 -2px 0px rgba(0, 0, 0, 0.2);
-    text-shadow: none; /* Remove dark text shadow */
+    box-shadow: none; /* Remove 3D shadow */
+    text-shadow: none;
     position: relative;
     overflow: hidden;
-    transition: background-position var(--transition-speed) ease,
-                transform var(--transition-speed) ease,
-                box-shadow var(--transition-speed) ease,
-                border-color var(--transition-speed) ease;
+    transition: background-color var(--transition-speed) ease,
+                border-color var(--transition-speed) ease,
+                transform var(--transition-speed) ease;
 }
 
 button:hover:not(:disabled) {
-    background-position: 50% 100%; /* Shift gradient */
-    border-color: var(--bg-lighter);
-    box-shadow: 0 4px 8px var(--color-shadow-dark), inset 0 -2px 0px rgba(0, 0, 0, 0.2), 0 0 10px var(--color-shadow-light); /* Add subtle white glow */
-    transform: translateY(-2px);
+    background-color: var(--bg-medium-gray); /* Darken background */
+    border-color: var(--bg-dark-gray);
+    box-shadow: none;
+    transform: none; /* No lift */
+    background-position: initial;
 }
 
 button:active:not(:disabled) {
-    transform: translateY(1px);
-    box-shadow: 0 1px 2px var(--color-shadow-dark), inset 0 1px 1px rgba(0, 0, 0, 0.3);
+    transform: scale(0.98); /* Simple scale active state */
+    background-color: var(--bg-dark-gray);
+    box-shadow: none;
 }
 
 button:focus {
-     outline: 2px solid var(--color-primary); /* White focus outline */
+     outline: 2px solid var(--color-primary); /* Black focus outline */
      outline-offset: 2px;
+     box-shadow: none;
 }
 
 
 button:disabled {
-     background: var(--bg-medium); /* Dark gray background */
-     color: var(--text-dark-gray); /* Darker gray text */
+     background: var(--bg-light-gray);
+     color: var(--text-light-gray); /* Lighter text */
      cursor: not-allowed;
-     box-shadow: inset 0 1px 3px var(--color-shadow-dark);
+     box-shadow: none;
      text-shadow: none;
      transform: none;
      background-image: none;
-     border-color: var(--bg-dark);
+     border-color: var(--bg-medium-gray);
+     opacity: 0.7; /* Indicate disabled state */
 }
 
 /* Specific Button Styles (Mic, Pronounce) */
 #ada-mic-btn, #dictionary-pronounce-btn {
-    background: var(--bg-dark); /* Darker base background */
-    color: var(--text-light-gray);
-    box-shadow: 0 2px 4px var(--color-shadow-dark);
-    border: 1px solid var(--bg-medium);
-    text-shadow: none;
-    background-image: none;
+    background: var(--bg-off-white);
+    color: var(--text-dark-gray);
+    box-shadow: none;
+    border: 1px solid var(--color-border);
 }
 #ada-mic-btn:hover:not(:disabled),
 #dictionary-pronounce-btn:hover:not(:disabled) {
-     background: var(--bg-medium);
-     box-shadow: 0 3px 6px var(--color-shadow-dark);
-     transform: translateY(-1px);
-     background-position: initial;
-     color: var(--text-white);
+     background: var(--bg-light-gray);
+     box-shadow: none;
+     transform: none;
+     color: var(--text-black);
 }
 
-/* Recording state - Use pulsing border/shadow instead of red */
+/* Recording state - Simple border change */
 #ada-mic-btn.recording {
-     background: var(--bg-dark);
-     color: var(--text-white);
-     border-color: var(--color-danger-indicator); /* White border */
-     box-shadow: 0 0 10px var(--color-danger-indicator); /* White shadow */
-     animation: mic-pulse-bw 1s infinite;
-}
-@keyframes mic-pulse-bw {
-    0% { box-shadow: 0 0 5px var(--color-danger-indicator); border-color: var(--bg-lighter); }
-    50% { box-shadow: 0 0 15px var(--color-danger-indicator); border-color: var(--color-danger-indicator); }
-    100% { box-shadow: 0 0 5px var(--color-danger-indicator); border-color: var(--bg-lighter); }
+     background: var(--bg-off-white);
+     color: var(--text-black);
+     border-color: var(--color-danger-indicator); /* Black border */
+     box-shadow: 0 0 5px var(--color-glow); /* Subtle dark glow */
+     animation: none; /* Remove pulse */
 }
 
 
 /* 10. Output Areas */
 .output-area {
-    background-color: var(--bg-darker); /* Darkest output */
-    border: 1px solid var(--bg-medium);
-    padding: 20px;
-    margin-top: 20px;
+    background-color: var(--bg-off-white); /* Off-white output */
+    border: 1px solid var(--color-border);
+    padding: 15px; /* Adjust padding */
+    margin-top: 15px;
     border-radius: var(--border-radius);
-    min-height: 120px;
+    min-height: 100px;
     white-space: pre-wrap;
     word-wrap: break-word;
-    color: var(--text-medium-gray); /* Default output text */
-    box-shadow: inset 0 2px 5px var(--color-shadow-dark);
-    line-height: 1.7;
+    color: var(--text-dark-gray); /* Dark gray output text */
+    box-shadow: none; /* Remove inset shadow */
+    line-height: 1.6;
     font-size: 0.95rem;
     position: relative;
     overflow: hidden;
+    /* Remove scanline pseudo-element */
 }
-
-/* Scanline effect (grayscale) */
-.output-area::after {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.15) 50%), linear-gradient(90deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0.005), rgba(255, 255, 255, 0.01));
-    background-size: 100% 4px, 6px 100%; /* Adjust line thickness/spacing */
-    z-index: 1;
-    pointer-events: none;
-    animation: scanlines 30s linear infinite;
-    opacity: 0.5; /* Adjust opacity */
-}
-
-@keyframes scanlines {
-  from { background-position: 0 0, 0 0; }
-  to { background-position: 0 100%, 0 0; }
-}
+/* Remove scanline styles */
+/* .output-area::after { display: none; } */
 
 .output-area b { /* Style bold text from backend */
-    color: var(--text-white); /* White bold text */
-    font-weight: 500;
-    text-shadow: 0 0 4px var(--color-shadow-light); /* Subtle white glow */
+    color: var(--text-black); /* Black bold text */
+    font-weight: 600; /* Slightly bolder */
+    text-shadow: none;
 }
 .output-area > *:first-child { margin-top: 0; }
 .output-area > *:last-child { margin-bottom: 0; }
@@ -448,62 +368,56 @@ button:disabled {
 .chat-history {
     max-height: 450px;
     overflow-y: auto;
-    border: 1px solid var(--bg-medium);
-    padding: 15px;
-    margin-bottom: 15px;
-    background-color: var(--bg-darker); /* Darkest background */
+    border: 1px solid var(--color-border);
+    padding: 10px; /* Adjust padding */
+    margin-bottom: 10px;
+    background-color: var(--bg-white); /* White chat background */
     border-radius: var(--border-radius);
-    box-shadow: inset 0 3px 8px var(--color-shadow-dark);
+    box-shadow: none; /* Remove inset shadow */
     scrollbar-width: thin;
-    scrollbar-color: var(--bg-medium) var(--bg-darker);
+    scrollbar-color: var(--bg-medium-gray) var(--bg-light-gray); /* Gray scrollbar */
 }
+/* Webkit scrollbar styling */
 .chat-history::-webkit-scrollbar { width: 8px; }
-.chat-history::-webkit-scrollbar-track { background: var(--bg-darker); border-radius: 4px; }
-.chat-history::-webkit-scrollbar-thumb { background-color: var(--bg-medium); border-radius: 4px; border: 2px solid var(--bg-darker); }
-.chat-history::-webkit-scrollbar-thumb:hover { background-color: var(--bg-light); }
+.chat-history::-webkit-scrollbar-track { background: var(--bg-light-gray); border-radius: 4px; }
+.chat-history::-webkit-scrollbar-thumb { background-color: var(--bg-medium-gray); border-radius: 4px; border: 2px solid var(--bg-light-gray); }
+.chat-history::-webkit-scrollbar-thumb:hover { background-color: var(--bg-dark-gray); }
 
 
 .chat-history .user-message,
 .chat-history .model-message,
 .chat-history .system-message {
-    padding: 10px 15px;
-    margin-bottom: 10px;
-    border-radius: 18px;
+    padding: 8px 12px; /* Adjust padding */
+    margin-bottom: 8px;
+    border-radius: 15px; /* Keep rounded */
     max-width: 85%;
     word-wrap: break-word;
     line-height: 1.5;
     position: relative;
-    box-shadow: 0 2px 4px var(--color-shadow-dark);
-    background-size: 30px 30px; /* Pattern size */
-    /* Subtle diagonal pattern using grayscale */
-    background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.01) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.01) 75%, rgba(255, 255, 255, 0.01)),
-                      linear-gradient(-45deg, rgba(255, 255, 255, 0.01) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.01) 75%, rgba(255, 255, 255, 0.01));
-    /* Entry animation */
-    opacity: 0;
-    transform: translateY(10px);
-    animation: chatBubbleEntry 0.4s ease-out forwards;
+    box-shadow: 0 1px 2px var(--color-shadow); /* Subtle shadow */
+    background-image: none; /* Remove pattern */
+    /* Remove entry animation for simplicity */
+    opacity: 1;
+    transform: none;
+    animation: none;
 }
 
 .chat-history .user-message {
-    background-color: var(--color-user-bubble-bg); /* Dark Gray */
-    color: var(--color-user-bubble-text); /* White */
+    background-color: var(--color-user-bubble-bg); /* Light Gray */
+    color: var(--color-user-bubble-text); /* Black */
     margin-left: auto;
     border-bottom-right-radius: 5px;
-    animation-delay: 0.1s;
 }
 
 .chat-history .model-message {
-    background-color: var(--color-model-bubble-bg); /* Light Gray */
+    background-color: var(--color-model-bubble-bg); /* Medium Gray */
     color: var(--color-model-bubble-text); /* Black */
     margin-right: auto;
     border-bottom-left-radius: 5px;
 }
 
-@keyframes chatBubbleEntry { to { opacity: 1; transform: translateY(0); } }
-
 .chat-history .system-message {
-     background: var(--bg-dark);
-     background-image: none;
+     background: var(--bg-off-white);
      color: var(--text-medium-gray);
      font-style: italic;
      text-align: center;
@@ -511,9 +425,6 @@ button:disabled {
      border-radius: var(--border-radius);
      box-shadow: none;
      font-size: 0.9em;
-     animation: none;
-     opacity: 1;
-     transform: none;
 }
 
 
@@ -522,54 +433,50 @@ button:disabled {
     align-items: stretch;
     gap: 10px;
 }
-.chat-input-area textarea {
-    flex-grow: 1; margin-bottom: 0; height: auto; min-height: 45px; resize: none; padding-top: 12px; padding-bottom: 12px; line-height: 1.4;
-}
+.chat-input-area textarea { flex-grow: 1; margin-bottom: 0; height: auto; min-height: 40px; resize: none; padding-top: 10px; padding-bottom: 10px; line-height: 1.5; }
 .chat-input-area button { flex-shrink: 0; height: auto; align-self: stretch; }
 
 /* 12. Paraphraser Styles Checkboxes */
 .paraphraser-styles { margin-bottom: 15px; display: flex; flex-wrap: wrap; gap: 15px; }
 .paraphraser-styles label { cursor: pointer; display: inline-flex; align-items: center; gap: 5px; color: var(--text-medium-gray); transition: color var(--transition-speed) ease; }
-.paraphraser-styles input[type="checkbox"] { appearance: none; width: 16px; height: 16px; border: 1px solid var(--bg-medium); border-radius: 3px; background-color: var(--bg-dark); cursor: pointer; position: relative; transition: all var(--transition-speed) ease; box-shadow: inset 0 1px 2px var(--color-shadow-dark); }
-.paraphraser-styles input[type="checkbox"]::before { content: ''; position: absolute; top: 2px; left: 5px; width: 4px; height: 8px; border: solid var(--text-white); border-width: 0 2px 2px 0; transform: rotate(45deg) scale(0); transition: transform var(--transition-speed) ease; }
-.paraphraser-styles input[type="checkbox"]:checked { background-color: var(--bg-light); border-color: var(--bg-lighter); box-shadow: inset 0 1px 2px var(--color-shadow-dark), 0 0 5px var(--color-shadow-light); }
+.paraphraser-styles input[type="checkbox"] { appearance: none; width: 16px; height: 16px; border: 1px solid var(--color-border); border-radius: 3px; background-color: var(--bg-white); cursor: pointer; position: relative; transition: all var(--transition-speed) ease; box-shadow: none; }
+.paraphraser-styles input[type="checkbox"]::before { content: ''; position: absolute; top: 2px; left: 5px; width: 4px; height: 8px; border: solid var(--text-black); border-width: 0 2px 2px 0; transform: rotate(45deg) scale(0); transition: transform var(--transition-speed) ease; }
+.paraphraser-styles input[type="checkbox"]:checked { background-color: var(--bg-medium-gray); border-color: var(--bg-dark-gray); box-shadow: none; }
 .paraphraser-styles input[type="checkbox"]:checked::before { transform: rotate(45deg) scale(1); }
-.paraphraser-styles label:hover { color: var(--text-white); }
-.paraphraser-styles label:hover input[type="checkbox"] { border-color: var(--bg-lighter); }
+.paraphraser-styles label:hover { color: var(--text-black); }
+.paraphraser-styles label:hover input[type="checkbox"] { border-color: var(--bg-dark-gray); }
 
 
 /* 13. Objectifier Preview / Options / File Label */
 .objectifier-options { margin-bottom: 15px; display: flex; gap: 10px; }
-.option-btn { flex-grow: 1; background-color: var(--bg-medium); color: var(--text-medium-gray); border: 1px solid var(--color-border); padding: 9px 15px; cursor: pointer; border-radius: var(--border-radius); font-weight: 400; transition: all var(--transition-speed) ease; }
-.option-btn:hover { background-color: var(--bg-light); color: var(--text-white); }
-.option-btn.active { background-color: var(--color-primary); color: var(--text-black); border-color: var(--color-primary); font-weight: 500; }
-.file-label { display: inline-block; padding: 10px 18px; background: var(--bg-dark); color: var(--text-light-gray); border-radius: var(--border-radius); cursor: pointer; transition: all var(--transition-speed) ease; margin-bottom: 10px; box-shadow: 0 2px 4px var(--color-shadow-dark); border: 1px solid var(--bg-medium); }
-.file-label:hover { background: var(--bg-medium); box-shadow: 0 3px 6px var(--color-shadow-dark); transform: translateY(-1px); }
+.option-btn { flex-grow: 1; background-color: var(--bg-light-gray); color: var(--text-dark-gray); border: 1px solid var(--color-border); padding: 9px 15px; cursor: pointer; border-radius: var(--border-radius); font-weight: 400; transition: all var(--transition-speed) ease; }
+.option-btn:hover { background-color: var(--bg-medium-gray); color: var(--text-black); }
+.option-btn.active { background-color: var(--color-primary); color: var(--text-white); border-color: var(--color-primary); font-weight: 500; }
+.file-label { display: inline-block; padding: 10px 18px; background: var(--bg-off-white); color: var(--text-dark-gray); border-radius: var(--border-radius); cursor: pointer; transition: all var(--transition-speed) ease; margin-bottom: 10px; box-shadow: none; border: 1px solid var(--color-border); }
+.file-label:hover { background: var(--bg-light-gray); box-shadow: none; transform: none; }
 .file-label input[type="file"] { display: none; }
 #objectifier-camera-area { display: flex; flex-direction: column; align-items: center; margin-bottom: 15px; }
 .camera-controls { display: flex; gap: 10px; margin-top: 10px; }
-.cancel-btn { background: var(--bg-dark); color: var(--text-medium-gray); border: 1px solid var(--bg-medium); }
-.cancel-btn:hover { background: var(--bg-medium); color: var(--text-light-gray); }
+.cancel-btn { background: var(--bg-light-gray); color: var(--text-dark-gray); border: 1px solid var(--color-border); }
+.cancel-btn:hover { background: var(--bg-medium-gray); color: var(--text-black); }
 .image-preview-area { margin-top: 15px; text-align: center; min-height: 50px; }
-.image-preview-area img { max-width: 100%; max-height: 250px; border: 2px solid var(--bg-medium); border-radius: var(--border-radius); background-color: var(--bg-darker); padding: 5px; box-shadow: 0 3px 8px var(--color-shadow-dark); }
-#objectifier-video-feed { transform: scaleX(-1); -webkit-transform: scaleX(-1); width: 100%; max-width: 500px; border-radius: 5px; margin-bottom: 10px; border: 1px solid var(--bg-medium); background-color: var(--bg-black); /* Add background for video area */ }
+.image-preview-area img { max-width: 100%; max-height: 250px; border: 1px solid var(--color-border); border-radius: var(--border-radius); background-color: var(--bg-light-gray); padding: 4px; box-shadow: 0 2px 5px var(--color-shadow); }
+#objectifier-video-feed { transform: scaleX(-1); -webkit-transform: scaleX(-1); width: 100%; max-width: 500px; border-radius: var(--border-radius); margin-bottom: 10px; border: 1px solid var(--color-border); background-color: var(--bg-light-gray); }
 
 /* 14. Loading/Thinking Indicator (CSS Only Animation) */
 .thinking-indicator {
     margin-top: 15px;
-    min-height: 2em; /* Reserve space */
-    color: var(--text-light-gray); /* Light Gray text */
+    min-height: 1.5em; /* Adjust space */
+    color: var(--text-medium-gray); /* Medium Gray text */
     font-style: italic;
     text-align: center;
-    /* Apply animation directly when element is displayed */
-    animation: fadeInPulse-bw 1.5s infinite ease-in-out;
-    /* Ensure it's visible when display is not 'none' */
+    /* Simple opacity pulse */
+    animation: fadeInPulse-light 1.8s infinite ease-in-out;
     opacity: 1;
 }
-/* Keyframes for the pulse/fade animation */
-@keyframes fadeInPulse-bw {
-    0%, 100% { opacity: 0.6; transform: scale(1); } /* Start slightly faded */
-    50% { opacity: 1; transform: scale(1.03); } /* Fully opaque and slightly larger */
+@keyframes fadeInPulse-light {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
 }
 
 /* 15. Accessibility helper */
@@ -578,20 +485,19 @@ button:disabled {
 /* 16. Responsive Design */
 @media (max-width: 768px) {
     header { padding: 1rem; }
-    h1 { font-size: 2.2rem; }
-    main#main-content { margin: 1.5rem 1rem; padding: 1rem 1.5rem; }
+    h1 { font-size: 2rem; }
+    main#main-content { margin: 1.5rem 1rem; padding: 1rem; }
     nav#tool-nav { gap: 8px; }
-    .nav-button { padding: 7px 12px; font-size: 0.9rem; }
+    .nav-button { padding: 7px 10px; font-size: 0.9rem; }
     .chat-input-area { flex-wrap: wrap; }
     .chat-input-area textarea { min-height: 40px; }
-    .tool-section h2 { font-size: 1.3rem; }
+    .tool-section h2 { font-size: 1.2rem; }
     #home-tool .tool-descriptions { grid-template-columns: 1fr; }
-    main#main-content::before { inset: -1px; }
 }
 
-/* 17. Custom Scrollbar (Whole page) */
+/* 17. Custom Scrollbar (Light theme) */
 body::-webkit-scrollbar { width: 10px; }
-body::-webkit-scrollbar-track { background: var(--bg-black); }
-body::-webkit-scrollbar-thumb { background-color: var(--bg-dark); border-radius: 5px; border: 2px solid var(--bg-black); }
-body::-webkit-scrollbar-thumb:hover { background-color: var(--bg-medium); }
-body { scrollbar-width: thin; scrollbar-color: var(--bg-dark) var(--bg-black); }
+body::-webkit-scrollbar-track { background: var(--bg-light-gray); }
+body::-webkit-scrollbar-thumb { background-color: var(--bg-medium-gray); border-radius: 5px; border: 2px solid var(--bg-light-gray); }
+body::-webkit-scrollbar-thumb:hover { background-color: var(--bg-dark-gray); }
+body { scrollbar-width: thin; scrollbar-color: var(--bg-medium-gray) var(--bg-light-gray); }
