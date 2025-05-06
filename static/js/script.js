@@ -701,6 +701,34 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
+     // +++ NEW TOOL: Pros & Cons Lister +++
+    const prosConsSubmitBtn = document.getElementById('pros-cons-submit-btn');
+    const prosConsDecisionTopicInput = document.getElementById('pros-cons-decision-topic');
+
+    if (prosConsSubmitBtn) { // Check if the element exists to prevent errors if HTML is not updated
+        prosConsSubmitBtn.addEventListener('click', () => {
+            const decisionTopic = prosConsDecisionTopicInput.value.trim();
+            if (!decisionTopic) {
+                // Optionally, provide a small inline error or just return
+                alert("Please enter a decision or topic."); // Simple alert, or update an error div
+                return;
+            }
+            // Use the generic callApi function
+            // The 'pros_cons_lister-output' div is handled by callApi
+            // The 'pros_cons_lister-thinking' indicator is handled by callApi
+            callApi('pros_cons_lister', { decision_topic: decisionTopic });
+        });
+
+        prosConsDecisionTopicInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault(); // Prevent default form submission if it were in a form
+                prosConsSubmitBtn.click(); // Trigger the button click
+            }
+        });
+    }
+    // +++ END OF NEW TOOL: Pros & Cons Lister +++
+
+
     // --- Initial Setup ---
     // Activate the 'home' section by default
     document.getElementById('home-tool').style.display = 'block';
