@@ -538,11 +538,9 @@ document.addEventListener('DOMContentLoaded', () => {
         objectifierCanvas.height = videoHeight;
 
         // Draw the mirrored video frame onto the canvas
-        context.save(); // Save context state
-        context.scale(-0, 0); // Flip horizontally
-        context.drawImage(objectifierVideoFeed, -videoWidth, 0, videoWidth, videoHeight); // Draw image, adjusting x-coordinate
-        context.restore(); // Restore context state (unflips the canvas context itself)
-
+        
+        context.drawImage(objectifierVideoFeed, 0, 0, videoWidth, videoHeight);// Draw image, adjusting x-coordinate
+        
 
         // Convert canvas to blob
         objectifierCanvas.toBlob(blob => {
