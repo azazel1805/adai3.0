@@ -264,6 +264,30 @@ Include the following sections clearly labeled EXACTLY as shown:
         result = generate_gemini_content(prompt)
 
 
+         elif tool == 'pros_cons_lister':
+        decision_topic = params.get('decision_topic', '').strip()
+        if not decision_topic:
+            result = "Error: Please enter a topic for the Pros and Cons list."
+        else:
+            prompt = f"""List the potential pros and cons of "{decision_topic}".
+Provide at least 3 pros and 3 cons.
+For each pro and con, provide a brief explanation.
+Structure your response clearly, for example:
+
+**Pros:**
+1.  **[Pro 1 Title/Summary]:** [Brief explanation]
+2.  **[Pro 2 Title/Summary]:** [Brief explanation]
+3.  **[Pro 3 Title/Summary]:** [Brief explanation]
+
+**Cons:**
+1.  **[Con 1 Title/Summary]:** [Brief explanation]
+2.  **[Con 2 Title/Summary]:** [Brief explanation]
+3.  **[Con 3 Title/Summary]:** [Brief explanation]
+"""
+            result = generate_gemini_content(prompt)
+    # +++ END OF NEW TOOL +++
+
+
     else:
         return jsonify({"error": "Invalid tool specified."}), 400
 
