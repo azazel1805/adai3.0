@@ -539,7 +539,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Draw the mirrored video frame onto the canvas
         
-        context.drawImage(objectifierVideoFeed, 0, 0, videoWidth, videoHeight);// Draw image, adjusting x-coordinate
+        context.drawImage(objectifierVideoFeed, 1, 1, videoWidth, videoHeight);// Draw image, adjusting x-coordinate
         
 
         // Convert canvas to blob
