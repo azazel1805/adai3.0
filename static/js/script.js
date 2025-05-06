@@ -539,7 +539,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Draw the mirrored video frame onto the canvas
         context.save(); // Save context state
-        context.scale(-1, 1); // Flip horizontally
+        context.scale(-0, 0); // Flip horizontally
         context.drawImage(objectifierVideoFeed, -videoWidth, 0, videoWidth, videoHeight); // Draw image, adjusting x-coordinate
         context.restore(); // Restore context state (unflips the canvas context itself)
 
