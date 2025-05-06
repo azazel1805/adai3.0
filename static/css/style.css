@@ -462,7 +462,7 @@ button:disabled {
 .cancel-btn:hover { background: var(--bg-medium-gray); color: var(--text-black); }
 .image-preview-area { margin-top: 15px; text-align: center; min-height: 50px; }
 .image-preview-area img { max-width: 100%; max-height: 250px; border: 1px solid var(--color-border); border-radius: var(--border-radius); background-color: var(--bg-light-gray); padding: 4px; box-shadow: 0 2px 5px var(--color-shadow); }
-#objectifier-video-feed { transform: scaleX(-1); -webkit-transform: scaleX(-1); width: 100%; max-width: 500px; border-radius: var(--border-radius); margin-bottom: 10px; border: 1px solid var(--color-border); background-color: var(--bg-light-gray); }
+#objectifier-video-feed { transform: scaleX(1); -webkit-transform: scaleX(1); width: 100%; max-width: 500px; border-radius: var(--border-radius); margin-bottom: 10px; border: 1px solid var(--color-border); background-color: var(--bg-light-gray); }
 
 /* 14. Loading/Thinking Indicator (CSS Only Animation) */
 .thinking-indicator {
