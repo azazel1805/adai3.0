@@ -263,8 +263,8 @@ Include the following sections clearly labeled EXACTLY as shown:
 
         result = generate_gemini_content(prompt)
 
-
-         elif tool == 'pros_cons_lister':
+# +++ YOUR NEW TOOL SHOULD BE HERE +++
+    elif tool == 'pros_cons_lister':
         decision_topic = params.get('decision_topic', '').strip()
         if not decision_topic:
             result = "Error: Please enter a topic for the Pros and Cons list."
