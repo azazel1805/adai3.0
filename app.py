@@ -16,7 +16,7 @@ try:
         raise ValueError("GOOGLE_API_KEY not found in .env file")
     genai.configure(api_key=api_key)
     # Use gemini-1.5-flash - good balance of speed and capability
-    model = genai.GenerativeModel('gemini-1.5-flash-latest')
+    model = genai.GenerativeModel('gemini-2.0-flash-latest')
     print("Gemini API configured successfully.")
 except Exception as e:
     print(f"Error configuring Gemini API: {e}")
@@ -281,3 +281,4 @@ if __name__ == '__main__':
     # Use 0.0.0.0 to be accessible on the network (needed for Render)
     # Debug=True is helpful during development, but REMOVE for production
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)), debug=False) # Use PORT env var for Render
+
